@@ -18,7 +18,7 @@ type Service {
   version: String
   canBeRemoved: Boolean! @default(value: "true")
   dependentServices: [Service!]!
-  environments: [Environment!]!
+  # environments: [Environment!]!
   # owner: User
   # tenant: Tenant!
 }
