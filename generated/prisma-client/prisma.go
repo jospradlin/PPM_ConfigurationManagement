@@ -63,7 +63,7 @@ func (client *Client) GraphQL(ctx context.Context, query string, variables map[s
 }
 
 
-var DefaultEndpoint = ""http://localhost:4467/ppmcm""
+var DefaultEndpoint = "http://localhost:4467/ppmcm"
 var Secret          = ""
 
 
