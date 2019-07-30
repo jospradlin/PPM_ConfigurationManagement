@@ -22,3 +22,43 @@ type Service {
   # owner: User
   # tenant: Tenant!
 }
+
+type Customer {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  companyId: String
+  alternateName: String
+  #service: String 
+  sapId: String
+  supportSiteId: String
+  platformTenantId: String
+  portalOrgId: String
+  type: String
+  status: String
+  #datacenter: String
+  #shipDate: String
+  prodAvailabilityGoal: String
+  slaVarianceMajor: String
+  slaVariableMinor: String
+  slaId: String
+  requirePerfReport: Boolean
+  contacts: [Contact!]!
+}
+
+type Contact {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  lastName: String!
+  firstName: String!
+  phoneMain: String
+  phoneMobile: String
+  email: String!
+  dbAccessType: String
+  emergencyNotification: String
+  systemNotification: String
+  vpnAccount: String
+  note: String
+}

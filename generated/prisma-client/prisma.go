@@ -63,9 +63,123 @@ func (client *Client) GraphQL(ctx context.Context, query string, variables map[s
 }
 
 
-var DefaultEndpoint = "http://localhost:4467/ppmcm"
+var DefaultEndpoint = ""http://localhost:4467/ppmcm""
 var Secret          = ""
 
+
+      func (client *Client) Contact (params ContactWhereUniqueInput) *ContactExec {
+        ret := client.Client.GetOne(
+          nil,
+          params,
+          [2]string{"ContactWhereUniqueInput!", "Contact"},
+          "contact",
+          []string{"id","createdAt","updatedAt","lastName","firstName","phoneMain","phoneMobile","email","dbAccessType","emergencyNotification","systemNotification","vpnAccount","note"})
+
+        return &ContactExec{ret}
+      }
+
+      type ContactsParams struct {
+        Where *ContactWhereInput `json:"where,omitempty"`
+OrderBy *ContactOrderByInput `json:"orderBy,omitempty"`
+Skip *int32 `json:"skip,omitempty"`
+After *string `json:"after,omitempty"`
+Before *string `json:"before,omitempty"`
+First *int32 `json:"first,omitempty"`
+Last *int32 `json:"last,omitempty"`
+      }
+      func (client *Client) Contacts (params *ContactsParams) *ContactExecArray {
+        var wparams *prisma.WhereParams
+        if params != nil {
+          wparams = &prisma.WhereParams{
+            Where: params.Where,
+            OrderBy: (*string)(params.OrderBy),
+            Skip: params.Skip,
+            After: params.After,
+            Before: params.Before,
+            First: params.First,
+            Last: params.Last,
+          }
+        }
+
+        ret := client.Client.GetMany(
+          nil,
+          wparams,
+          [3]string{"ContactWhereInput", "ContactOrderByInput", "Contact"},
+          "contacts",
+          []string{"id","createdAt","updatedAt","lastName","firstName","phoneMain","phoneMobile","email","dbAccessType","emergencyNotification","systemNotification","vpnAccount","note"})
+
+        return &ContactExecArray{ret}
+      }
+
+      type ContactsConnectionParams struct {
+        Where *ContactWhereInput `json:"where,omitempty"`
+OrderBy *ContactOrderByInput `json:"orderBy,omitempty"`
+Skip *int32 `json:"skip,omitempty"`
+After *string `json:"after,omitempty"`
+Before *string `json:"before,omitempty"`
+First *int32 `json:"first,omitempty"`
+Last *int32 `json:"last,omitempty"`
+      }
+      func (client *Client) ContactsConnection (params *ContactsConnectionParams) (ContactConnectionExec) {
+        panic("not implemented")
+      }
+
+      func (client *Client) Customer (params CustomerWhereUniqueInput) *CustomerExec {
+        ret := client.Client.GetOne(
+          nil,
+          params,
+          [2]string{"CustomerWhereUniqueInput!", "Customer"},
+          "customer",
+          []string{"id","createdAt","updatedAt","name","companyId","alternateName","sapId","supportSiteId","platformTenantId","portalOrgId","type","status","prodAvailabilityGoal","slaVarianceMajor","slaVariableMinor","slaId","requirePerfReport"})
+
+        return &CustomerExec{ret}
+      }
+
+      type CustomersParams struct {
+        Where *CustomerWhereInput `json:"where,omitempty"`
+OrderBy *CustomerOrderByInput `json:"orderBy,omitempty"`
+Skip *int32 `json:"skip,omitempty"`
+After *string `json:"after,omitempty"`
+Before *string `json:"before,omitempty"`
+First *int32 `json:"first,omitempty"`
+Last *int32 `json:"last,omitempty"`
+      }
+      func (client *Client) Customers (params *CustomersParams) *CustomerExecArray {
+        var wparams *prisma.WhereParams
+        if params != nil {
+          wparams = &prisma.WhereParams{
+            Where: params.Where,
+            OrderBy: (*string)(params.OrderBy),
+            Skip: params.Skip,
+            After: params.After,
+            Before: params.Before,
+            First: params.First,
+            Last: params.Last,
+          }
+        }
+
+        ret := client.Client.GetMany(
+          nil,
+          wparams,
+          [3]string{"CustomerWhereInput", "CustomerOrderByInput", "Customer"},
+          "customers",
+          []string{"id","createdAt","updatedAt","name","companyId","alternateName","sapId","supportSiteId","platformTenantId","portalOrgId","type","status","prodAvailabilityGoal","slaVarianceMajor","slaVariableMinor","slaId","requirePerfReport"})
+
+        return &CustomerExecArray{ret}
+      }
+
+      type CustomersConnectionParams struct {
+        Where *CustomerWhereInput `json:"where,omitempty"`
+OrderBy *CustomerOrderByInput `json:"orderBy,omitempty"`
+Skip *int32 `json:"skip,omitempty"`
+After *string `json:"after,omitempty"`
+Before *string `json:"before,omitempty"`
+First *int32 `json:"first,omitempty"`
+Last *int32 `json:"last,omitempty"`
+      }
+      func (client *Client) CustomersConnection (params *CustomersConnectionParams) (CustomerConnectionExec) {
+        panic("not implemented")
+      }
 
       func (client *Client) Service (params ServiceWhereUniqueInput) *ServiceExec {
         ret := client.Client.GetOne(
@@ -182,6 +296,160 @@ Last *int32 `json:"last,omitempty"`
       }
 
 
+
+      func (client *Client) CreateContact (params ContactCreateInput) *ContactExec {
+        ret := client.Client.Create(
+          params,
+          [2]string{"ContactCreateInput!", "Contact"},
+          "createContact",
+          []string{"id","createdAt","updatedAt","lastName","firstName","phoneMain","phoneMobile","email","dbAccessType","emergencyNotification","systemNotification","vpnAccount","note"})
+
+        return &ContactExec{ret}
+      }
+
+      type ContactUpdateParams struct {
+        Data ContactUpdateInput `json:"data"`
+Where ContactWhereUniqueInput `json:"where"`
+      }
+      func (client *Client) UpdateContact (params ContactUpdateParams) *ContactExec {
+        ret := client.Client.Update(
+                 prisma.UpdateParams{
+                   Data: params.Data,
+                   Where: params.Where,
+                 },
+                 [3]string{"ContactUpdateInput!", "ContactWhereUniqueInput!", "Contact"},
+                 "updateContact",
+                 []string{"id","createdAt","updatedAt","lastName","firstName","phoneMain","phoneMobile","email","dbAccessType","emergencyNotification","systemNotification","vpnAccount","note"})
+
+        return &ContactExec{ret}
+      }
+
+      type ContactUpdateManyParams struct {
+        Data ContactUpdateManyMutationInput `json:"data"`
+Where *ContactWhereInput `json:"where,omitempty"`
+      }
+      func (client *Client) UpdateManyContacts (params ContactUpdateManyParams) *BatchPayloadExec {
+        exec := client.Client.UpdateMany(
+          prisma.UpdateParams{
+            Data: params.Data,
+            Where: params.Where,
+          },
+          [2]string{"ContactUpdateManyMutationInput!", "ContactWhereInput"},
+          "updateManyContacts")
+        return &BatchPayloadExec{exec}
+      }
+
+      type ContactUpsertParams struct {
+        Where ContactWhereUniqueInput `json:"where"`
+Create ContactCreateInput `json:"create"`
+Update ContactUpdateInput `json:"update"`
+      }
+      func (client *Client) UpsertContact (params ContactUpsertParams) *ContactExec {
+        uparams := &prisma.UpsertParams{
+          Where:  params.Where,
+          Create: params.Create,
+          Update: params.Update,
+        }
+        ret := client.Client.Upsert(
+          uparams,
+          [4]string{"ContactWhereUniqueInput!", "ContactCreateInput!", "ContactUpdateInput!","Contact"},
+          "upsertContact",
+          []string{"id","createdAt","updatedAt","lastName","firstName","phoneMain","phoneMobile","email","dbAccessType","emergencyNotification","systemNotification","vpnAccount","note"})
+
+        return &ContactExec{ret}
+      }
+
+      func (client *Client) DeleteContact (params ContactWhereUniqueInput) *ContactExec {
+        ret := client.Client.Delete(
+          params,
+          [2]string{"ContactWhereUniqueInput!", "Contact"},
+          "deleteContact",
+          []string{"id","createdAt","updatedAt","lastName","firstName","phoneMain","phoneMobile","email","dbAccessType","emergencyNotification","systemNotification","vpnAccount","note"})
+
+        return &ContactExec{ret}
+      }
+
+      func (client *Client) DeleteManyContacts (params *ContactWhereInput) *BatchPayloadExec {
+        exec := client.Client.DeleteMany(params, "ContactWhereInput", "deleteManyContacts")
+        return &BatchPayloadExec{exec}
+      }
+
+      func (client *Client) CreateCustomer (params CustomerCreateInput) *CustomerExec {
+        ret := client.Client.Create(
+          params,
+          [2]string{"CustomerCreateInput!", "Customer"},
+          "createCustomer",
+          []string{"id","createdAt","updatedAt","name","companyId","alternateName","sapId","supportSiteId","platformTenantId","portalOrgId","type","status","prodAvailabilityGoal","slaVarianceMajor","slaVariableMinor","slaId","requirePerfReport"})
+
+        return &CustomerExec{ret}
+      }
+
+      type CustomerUpdateParams struct {
+        Data CustomerUpdateInput `json:"data"`
+Where CustomerWhereUniqueInput `json:"where"`
+      }
+      func (client *Client) UpdateCustomer (params CustomerUpdateParams) *CustomerExec {
+        ret := client.Client.Update(
+                 prisma.UpdateParams{
+                   Data: params.Data,
+                   Where: params.Where,
+                 },
+                 [3]string{"CustomerUpdateInput!", "CustomerWhereUniqueInput!", "Customer"},
+                 "updateCustomer",
+                 []string{"id","createdAt","updatedAt","name","companyId","alternateName","sapId","supportSiteId","platformTenantId","portalOrgId","type","status","prodAvailabilityGoal","slaVarianceMajor","slaVariableMinor","slaId","requirePerfReport"})
+
+        return &CustomerExec{ret}
+      }
+
+      type CustomerUpdateManyParams struct {
+        Data CustomerUpdateManyMutationInput `json:"data"`
+Where *CustomerWhereInput `json:"where,omitempty"`
+      }
+      func (client *Client) UpdateManyCustomers (params CustomerUpdateManyParams) *BatchPayloadExec {
+        exec := client.Client.UpdateMany(
+          prisma.UpdateParams{
+            Data: params.Data,
+            Where: params.Where,
+          },
+          [2]string{"CustomerUpdateManyMutationInput!", "CustomerWhereInput"},
+          "updateManyCustomers")
+        return &BatchPayloadExec{exec}
+      }
+
+      type CustomerUpsertParams struct {
+        Where CustomerWhereUniqueInput `json:"where"`
+Create CustomerCreateInput `json:"create"`
+Update CustomerUpdateInput `json:"update"`
+      }
+      func (client *Client) UpsertCustomer (params CustomerUpsertParams) *CustomerExec {
+        uparams := &prisma.UpsertParams{
+          Where:  params.Where,
+          Create: params.Create,
+          Update: params.Update,
+        }
+        ret := client.Client.Upsert(
+          uparams,
+          [4]string{"CustomerWhereUniqueInput!", "CustomerCreateInput!", "CustomerUpdateInput!","Customer"},
+          "upsertCustomer",
+          []string{"id","createdAt","updatedAt","name","companyId","alternateName","sapId","supportSiteId","platformTenantId","portalOrgId","type","status","prodAvailabilityGoal","slaVarianceMajor","slaVariableMinor","slaId","requirePerfReport"})
+
+        return &CustomerExec{ret}
+      }
+
+      func (client *Client) DeleteCustomer (params CustomerWhereUniqueInput) *CustomerExec {
+        ret := client.Client.Delete(
+          params,
+          [2]string{"CustomerWhereUniqueInput!", "Customer"},
+          "deleteCustomer",
+          []string{"id","createdAt","updatedAt","name","companyId","alternateName","sapId","supportSiteId","platformTenantId","portalOrgId","type","status","prodAvailabilityGoal","slaVarianceMajor","slaVariableMinor","slaId","requirePerfReport"})
+
+        return &CustomerExec{ret}
+      }
+
+      func (client *Client) DeleteManyCustomers (params *CustomerWhereInput) *BatchPayloadExec {
+        exec := client.Client.DeleteMany(params, "CustomerWhereInput", "deleteManyCustomers")
+        return &BatchPayloadExec{exec}
+      }
 
       func (client *Client) CreateService (params ServiceCreateInput) *ServiceExec {
         ret := client.Client.Create(
@@ -338,6 +606,81 @@ Update UserUpdateInput `json:"update"`
       }
 
 
+        type MutationType string
+        const (
+          MutationTypeCreated MutationType = "CREATED"
+MutationTypeUpdated MutationType = "UPDATED"
+MutationTypeDeleted MutationType = "DELETED"
+          )
+
+        type ContactOrderByInput string
+        const (
+          ContactOrderByInputIDAsc ContactOrderByInput = "id_ASC"
+ContactOrderByInputIDDesc ContactOrderByInput = "id_DESC"
+ContactOrderByInputCreatedAtAsc ContactOrderByInput = "createdAt_ASC"
+ContactOrderByInputCreatedAtDesc ContactOrderByInput = "createdAt_DESC"
+ContactOrderByInputUpdatedAtAsc ContactOrderByInput = "updatedAt_ASC"
+ContactOrderByInputUpdatedAtDesc ContactOrderByInput = "updatedAt_DESC"
+ContactOrderByInputLastNameAsc ContactOrderByInput = "lastName_ASC"
+ContactOrderByInputLastNameDesc ContactOrderByInput = "lastName_DESC"
+ContactOrderByInputFirstNameAsc ContactOrderByInput = "firstName_ASC"
+ContactOrderByInputFirstNameDesc ContactOrderByInput = "firstName_DESC"
+ContactOrderByInputPhoneMainAsc ContactOrderByInput = "phoneMain_ASC"
+ContactOrderByInputPhoneMainDesc ContactOrderByInput = "phoneMain_DESC"
+ContactOrderByInputPhoneMobileAsc ContactOrderByInput = "phoneMobile_ASC"
+ContactOrderByInputPhoneMobileDesc ContactOrderByInput = "phoneMobile_DESC"
+ContactOrderByInputEmailAsc ContactOrderByInput = "email_ASC"
+ContactOrderByInputEmailDesc ContactOrderByInput = "email_DESC"
+ContactOrderByInputDbAccessTypeAsc ContactOrderByInput = "dbAccessType_ASC"
+ContactOrderByInputDbAccessTypeDesc ContactOrderByInput = "dbAccessType_DESC"
+ContactOrderByInputEmergencyNotificationAsc ContactOrderByInput = "emergencyNotification_ASC"
+ContactOrderByInputEmergencyNotificationDesc ContactOrderByInput = "emergencyNotification_DESC"
+ContactOrderByInputSystemNotificationAsc ContactOrderByInput = "systemNotification_ASC"
+ContactOrderByInputSystemNotificationDesc ContactOrderByInput = "systemNotification_DESC"
+ContactOrderByInputVpnAccountAsc ContactOrderByInput = "vpnAccount_ASC"
+ContactOrderByInputVpnAccountDesc ContactOrderByInput = "vpnAccount_DESC"
+ContactOrderByInputNoteAsc ContactOrderByInput = "note_ASC"
+ContactOrderByInputNoteDesc ContactOrderByInput = "note_DESC"
+          )
+
+        type CustomerOrderByInput string
+        const (
+          CustomerOrderByInputIDAsc CustomerOrderByInput = "id_ASC"
+CustomerOrderByInputIDDesc CustomerOrderByInput = "id_DESC"
+CustomerOrderByInputCreatedAtAsc CustomerOrderByInput = "createdAt_ASC"
+CustomerOrderByInputCreatedAtDesc CustomerOrderByInput = "createdAt_DESC"
+CustomerOrderByInputUpdatedAtAsc CustomerOrderByInput = "updatedAt_ASC"
+CustomerOrderByInputUpdatedAtDesc CustomerOrderByInput = "updatedAt_DESC"
+CustomerOrderByInputNameAsc CustomerOrderByInput = "name_ASC"
+CustomerOrderByInputNameDesc CustomerOrderByInput = "name_DESC"
+CustomerOrderByInputCompanyIdAsc CustomerOrderByInput = "companyId_ASC"
+CustomerOrderByInputCompanyIdDesc CustomerOrderByInput = "companyId_DESC"
+CustomerOrderByInputAlternateNameAsc CustomerOrderByInput = "alternateName_ASC"
+CustomerOrderByInputAlternateNameDesc CustomerOrderByInput = "alternateName_DESC"
+CustomerOrderByInputSapIdAsc CustomerOrderByInput = "sapId_ASC"
+CustomerOrderByInputSapIdDesc CustomerOrderByInput = "sapId_DESC"
+CustomerOrderByInputSupportSiteIdAsc CustomerOrderByInput = "supportSiteId_ASC"
+CustomerOrderByInputSupportSiteIdDesc CustomerOrderByInput = "supportSiteId_DESC"
+CustomerOrderByInputPlatformTenantIdAsc CustomerOrderByInput = "platformTenantId_ASC"
+CustomerOrderByInputPlatformTenantIdDesc CustomerOrderByInput = "platformTenantId_DESC"
+CustomerOrderByInputPortalOrgIdAsc CustomerOrderByInput = "portalOrgId_ASC"
+CustomerOrderByInputPortalOrgIdDesc CustomerOrderByInput = "portalOrgId_DESC"
+CustomerOrderByInputTypeAsc CustomerOrderByInput = "type_ASC"
+CustomerOrderByInputTypeDesc CustomerOrderByInput = "type_DESC"
+CustomerOrderByInputStatusAsc CustomerOrderByInput = "status_ASC"
+CustomerOrderByInputStatusDesc CustomerOrderByInput = "status_DESC"
+CustomerOrderByInputProdAvailabilityGoalAsc CustomerOrderByInput = "prodAvailabilityGoal_ASC"
+CustomerOrderByInputProdAvailabilityGoalDesc CustomerOrderByInput = "prodAvailabilityGoal_DESC"
+CustomerOrderByInputSlaVarianceMajorAsc CustomerOrderByInput = "slaVarianceMajor_ASC"
+CustomerOrderByInputSlaVarianceMajorDesc CustomerOrderByInput = "slaVarianceMajor_DESC"
+CustomerOrderByInputSlaVariableMinorAsc CustomerOrderByInput = "slaVariableMinor_ASC"
+CustomerOrderByInputSlaVariableMinorDesc CustomerOrderByInput = "slaVariableMinor_DESC"
+CustomerOrderByInputSlaIdAsc CustomerOrderByInput = "slaId_ASC"
+CustomerOrderByInputSlaIdDesc CustomerOrderByInput = "slaId_DESC"
+CustomerOrderByInputRequirePerfReportAsc CustomerOrderByInput = "requirePerfReport_ASC"
+CustomerOrderByInputRequirePerfReportDesc CustomerOrderByInput = "requirePerfReport_DESC"
+          )
+
         type ServiceOrderByInput string
         const (
           ServiceOrderByInputIDAsc ServiceOrderByInput = "id_ASC"
@@ -374,21 +717,39 @@ UserOrderByInputUpdatedAtAsc UserOrderByInput = "updatedAt_ASC"
 UserOrderByInputUpdatedAtDesc UserOrderByInput = "updatedAt_DESC"
           )
 
-        type MutationType string
-        const (
-          MutationTypeCreated MutationType = "CREATED"
-MutationTypeUpdated MutationType = "UPDATED"
-MutationTypeDeleted MutationType = "DELETED"
-          )
+      type ServiceUpdateWithWhereUniqueNestedInput struct {
+        Where ServiceWhereUniqueInput `json:"where"`
+Data ServiceUpdateDataInput `json:"data"`
+          }
+
+      type ContactUpsertWithWhereUniqueNestedInput struct {
+        Where ContactWhereUniqueInput `json:"where"`
+Update ContactUpdateDataInput `json:"update"`
+Create ContactCreateInput `json:"create"`
+          }
+
+      type UserWhereUniqueInput struct {
+        ID *string `json:"id,omitempty"`
+          }
+
+      type ContactWhereUniqueInput struct {
+        ID *string `json:"id,omitempty"`
+          }
 
       type ServiceCreateManyInput struct {
         Create []ServiceCreateInput `json:"create,omitempty"`
 Connect []ServiceWhereUniqueInput `json:"connect,omitempty"`
           }
 
-      type ServiceWhereUniqueInput struct {
-        ID *string `json:"id,omitempty"`
-Code *string `json:"code,omitempty"`
+      type ContactSubscriptionWhereInput struct {
+        MutationIn []MutationType `json:"mutation_in,omitempty"`
+UpdatedFieldsContains *string `json:"updatedFields_contains,omitempty"`
+UpdatedFieldsContainsEvery []string `json:"updatedFields_contains_every,omitempty"`
+UpdatedFieldsContainsSome []string `json:"updatedFields_contains_some,omitempty"`
+Node *ContactWhereInput `json:"node,omitempty"`
+And []ContactSubscriptionWhereInput `json:"AND,omitempty"`
+Or []ContactSubscriptionWhereInput `json:"OR,omitempty"`
+Not []ContactSubscriptionWhereInput `json:"NOT,omitempty"`
           }
 
       type UserWhereInput struct {
@@ -423,6 +784,385 @@ NameNotEndsWith *string `json:"name_not_ends_with,omitempty"`
 And []UserWhereInput `json:"AND,omitempty"`
 Or []UserWhereInput `json:"OR,omitempty"`
 Not []UserWhereInput `json:"NOT,omitempty"`
+          }
+
+      type UserUpdateInput struct {
+        Name *string `json:"name,omitempty"`
+          }
+
+      type ServiceSubscriptionWhereInput struct {
+        MutationIn []MutationType `json:"mutation_in,omitempty"`
+UpdatedFieldsContains *string `json:"updatedFields_contains,omitempty"`
+UpdatedFieldsContainsEvery []string `json:"updatedFields_contains_every,omitempty"`
+UpdatedFieldsContainsSome []string `json:"updatedFields_contains_some,omitempty"`
+Node *ServiceWhereInput `json:"node,omitempty"`
+And []ServiceSubscriptionWhereInput `json:"AND,omitempty"`
+Or []ServiceSubscriptionWhereInput `json:"OR,omitempty"`
+Not []ServiceSubscriptionWhereInput `json:"NOT,omitempty"`
+          }
+
+      type ServiceUpdateManyMutationInput struct {
+        Name *string `json:"name,omitempty"`
+Code *string `json:"code,omitempty"`
+Description *string `json:"description,omitempty"`
+Status *string `json:"status,omitempty"`
+Type *string `json:"type,omitempty"`
+Version *string `json:"version,omitempty"`
+CanBeRemoved *bool `json:"canBeRemoved,omitempty"`
+          }
+
+      type ServiceCreateInput struct {
+        Name string `json:"name"`
+Code string `json:"code"`
+Description *string `json:"description,omitempty"`
+Status string `json:"status"`
+Type string `json:"type"`
+Version *string `json:"version,omitempty"`
+CanBeRemoved *bool `json:"canBeRemoved,omitempty"`
+DependentServices *ServiceCreateManyInput `json:"dependentServices,omitempty"`
+          }
+
+      type ServiceUpdateManyDataInput struct {
+        Name *string `json:"name,omitempty"`
+Code *string `json:"code,omitempty"`
+Description *string `json:"description,omitempty"`
+Status *string `json:"status,omitempty"`
+Type *string `json:"type,omitempty"`
+Version *string `json:"version,omitempty"`
+CanBeRemoved *bool `json:"canBeRemoved,omitempty"`
+          }
+
+      type CustomerUpdateManyMutationInput struct {
+        Name *string `json:"name,omitempty"`
+CompanyId *string `json:"companyId,omitempty"`
+AlternateName *string `json:"alternateName,omitempty"`
+SapId *string `json:"sapId,omitempty"`
+SupportSiteId *string `json:"supportSiteId,omitempty"`
+PlatformTenantId *string `json:"platformTenantId,omitempty"`
+PortalOrgId *string `json:"portalOrgId,omitempty"`
+Type *string `json:"type,omitempty"`
+Status *string `json:"status,omitempty"`
+ProdAvailabilityGoal *string `json:"prodAvailabilityGoal,omitempty"`
+SlaVarianceMajor *string `json:"slaVarianceMajor,omitempty"`
+SlaVariableMinor *string `json:"slaVariableMinor,omitempty"`
+SlaId *string `json:"slaId,omitempty"`
+RequirePerfReport *bool `json:"requirePerfReport,omitempty"`
+          }
+
+      type ContactWhereInput struct {
+        ID *string `json:"id,omitempty"`
+IDNot *string `json:"id_not,omitempty"`
+IDIn []string `json:"id_in,omitempty"`
+IDNotIn []string `json:"id_not_in,omitempty"`
+IDLt *string `json:"id_lt,omitempty"`
+IDLte *string `json:"id_lte,omitempty"`
+IDGt *string `json:"id_gt,omitempty"`
+IDGte *string `json:"id_gte,omitempty"`
+IDContains *string `json:"id_contains,omitempty"`
+IDNotContains *string `json:"id_not_contains,omitempty"`
+IDStartsWith *string `json:"id_starts_with,omitempty"`
+IDNotStartsWith *string `json:"id_not_starts_with,omitempty"`
+IDEndsWith *string `json:"id_ends_with,omitempty"`
+IDNotEndsWith *string `json:"id_not_ends_with,omitempty"`
+CreatedAt *string `json:"createdAt,omitempty"`
+CreatedAtNot *string `json:"createdAt_not,omitempty"`
+CreatedAtIn []string `json:"createdAt_in,omitempty"`
+CreatedAtNotIn []string `json:"createdAt_not_in,omitempty"`
+CreatedAtLt *string `json:"createdAt_lt,omitempty"`
+CreatedAtLte *string `json:"createdAt_lte,omitempty"`
+CreatedAtGt *string `json:"createdAt_gt,omitempty"`
+CreatedAtGte *string `json:"createdAt_gte,omitempty"`
+UpdatedAt *string `json:"updatedAt,omitempty"`
+UpdatedAtNot *string `json:"updatedAt_not,omitempty"`
+UpdatedAtIn []string `json:"updatedAt_in,omitempty"`
+UpdatedAtNotIn []string `json:"updatedAt_not_in,omitempty"`
+UpdatedAtLt *string `json:"updatedAt_lt,omitempty"`
+UpdatedAtLte *string `json:"updatedAt_lte,omitempty"`
+UpdatedAtGt *string `json:"updatedAt_gt,omitempty"`
+UpdatedAtGte *string `json:"updatedAt_gte,omitempty"`
+LastName *string `json:"lastName,omitempty"`
+LastNameNot *string `json:"lastName_not,omitempty"`
+LastNameIn []string `json:"lastName_in,omitempty"`
+LastNameNotIn []string `json:"lastName_not_in,omitempty"`
+LastNameLt *string `json:"lastName_lt,omitempty"`
+LastNameLte *string `json:"lastName_lte,omitempty"`
+LastNameGt *string `json:"lastName_gt,omitempty"`
+LastNameGte *string `json:"lastName_gte,omitempty"`
+LastNameContains *string `json:"lastName_contains,omitempty"`
+LastNameNotContains *string `json:"lastName_not_contains,omitempty"`
+LastNameStartsWith *string `json:"lastName_starts_with,omitempty"`
+LastNameNotStartsWith *string `json:"lastName_not_starts_with,omitempty"`
+LastNameEndsWith *string `json:"lastName_ends_with,omitempty"`
+LastNameNotEndsWith *string `json:"lastName_not_ends_with,omitempty"`
+FirstName *string `json:"firstName,omitempty"`
+FirstNameNot *string `json:"firstName_not,omitempty"`
+FirstNameIn []string `json:"firstName_in,omitempty"`
+FirstNameNotIn []string `json:"firstName_not_in,omitempty"`
+FirstNameLt *string `json:"firstName_lt,omitempty"`
+FirstNameLte *string `json:"firstName_lte,omitempty"`
+FirstNameGt *string `json:"firstName_gt,omitempty"`
+FirstNameGte *string `json:"firstName_gte,omitempty"`
+FirstNameContains *string `json:"firstName_contains,omitempty"`
+FirstNameNotContains *string `json:"firstName_not_contains,omitempty"`
+FirstNameStartsWith *string `json:"firstName_starts_with,omitempty"`
+FirstNameNotStartsWith *string `json:"firstName_not_starts_with,omitempty"`
+FirstNameEndsWith *string `json:"firstName_ends_with,omitempty"`
+FirstNameNotEndsWith *string `json:"firstName_not_ends_with,omitempty"`
+PhoneMain *string `json:"phoneMain,omitempty"`
+PhoneMainNot *string `json:"phoneMain_not,omitempty"`
+PhoneMainIn []string `json:"phoneMain_in,omitempty"`
+PhoneMainNotIn []string `json:"phoneMain_not_in,omitempty"`
+PhoneMainLt *string `json:"phoneMain_lt,omitempty"`
+PhoneMainLte *string `json:"phoneMain_lte,omitempty"`
+PhoneMainGt *string `json:"phoneMain_gt,omitempty"`
+PhoneMainGte *string `json:"phoneMain_gte,omitempty"`
+PhoneMainContains *string `json:"phoneMain_contains,omitempty"`
+PhoneMainNotContains *string `json:"phoneMain_not_contains,omitempty"`
+PhoneMainStartsWith *string `json:"phoneMain_starts_with,omitempty"`
+PhoneMainNotStartsWith *string `json:"phoneMain_not_starts_with,omitempty"`
+PhoneMainEndsWith *string `json:"phoneMain_ends_with,omitempty"`
+PhoneMainNotEndsWith *string `json:"phoneMain_not_ends_with,omitempty"`
+PhoneMobile *string `json:"phoneMobile,omitempty"`
+PhoneMobileNot *string `json:"phoneMobile_not,omitempty"`
+PhoneMobileIn []string `json:"phoneMobile_in,omitempty"`
+PhoneMobileNotIn []string `json:"phoneMobile_not_in,omitempty"`
+PhoneMobileLt *string `json:"phoneMobile_lt,omitempty"`
+PhoneMobileLte *string `json:"phoneMobile_lte,omitempty"`
+PhoneMobileGt *string `json:"phoneMobile_gt,omitempty"`
+PhoneMobileGte *string `json:"phoneMobile_gte,omitempty"`
+PhoneMobileContains *string `json:"phoneMobile_contains,omitempty"`
+PhoneMobileNotContains *string `json:"phoneMobile_not_contains,omitempty"`
+PhoneMobileStartsWith *string `json:"phoneMobile_starts_with,omitempty"`
+PhoneMobileNotStartsWith *string `json:"phoneMobile_not_starts_with,omitempty"`
+PhoneMobileEndsWith *string `json:"phoneMobile_ends_with,omitempty"`
+PhoneMobileNotEndsWith *string `json:"phoneMobile_not_ends_with,omitempty"`
+Email *string `json:"email,omitempty"`
+EmailNot *string `json:"email_not,omitempty"`
+EmailIn []string `json:"email_in,omitempty"`
+EmailNotIn []string `json:"email_not_in,omitempty"`
+EmailLt *string `json:"email_lt,omitempty"`
+EmailLte *string `json:"email_lte,omitempty"`
+EmailGt *string `json:"email_gt,omitempty"`
+EmailGte *string `json:"email_gte,omitempty"`
+EmailContains *string `json:"email_contains,omitempty"`
+EmailNotContains *string `json:"email_not_contains,omitempty"`
+EmailStartsWith *string `json:"email_starts_with,omitempty"`
+EmailNotStartsWith *string `json:"email_not_starts_with,omitempty"`
+EmailEndsWith *string `json:"email_ends_with,omitempty"`
+EmailNotEndsWith *string `json:"email_not_ends_with,omitempty"`
+DbAccessType *string `json:"dbAccessType,omitempty"`
+DbAccessTypeNot *string `json:"dbAccessType_not,omitempty"`
+DbAccessTypeIn []string `json:"dbAccessType_in,omitempty"`
+DbAccessTypeNotIn []string `json:"dbAccessType_not_in,omitempty"`
+DbAccessTypeLt *string `json:"dbAccessType_lt,omitempty"`
+DbAccessTypeLte *string `json:"dbAccessType_lte,omitempty"`
+DbAccessTypeGt *string `json:"dbAccessType_gt,omitempty"`
+DbAccessTypeGte *string `json:"dbAccessType_gte,omitempty"`
+DbAccessTypeContains *string `json:"dbAccessType_contains,omitempty"`
+DbAccessTypeNotContains *string `json:"dbAccessType_not_contains,omitempty"`
+DbAccessTypeStartsWith *string `json:"dbAccessType_starts_with,omitempty"`
+DbAccessTypeNotStartsWith *string `json:"dbAccessType_not_starts_with,omitempty"`
+DbAccessTypeEndsWith *string `json:"dbAccessType_ends_with,omitempty"`
+DbAccessTypeNotEndsWith *string `json:"dbAccessType_not_ends_with,omitempty"`
+EmergencyNotification *string `json:"emergencyNotification,omitempty"`
+EmergencyNotificationNot *string `json:"emergencyNotification_not,omitempty"`
+EmergencyNotificationIn []string `json:"emergencyNotification_in,omitempty"`
+EmergencyNotificationNotIn []string `json:"emergencyNotification_not_in,omitempty"`
+EmergencyNotificationLt *string `json:"emergencyNotification_lt,omitempty"`
+EmergencyNotificationLte *string `json:"emergencyNotification_lte,omitempty"`
+EmergencyNotificationGt *string `json:"emergencyNotification_gt,omitempty"`
+EmergencyNotificationGte *string `json:"emergencyNotification_gte,omitempty"`
+EmergencyNotificationContains *string `json:"emergencyNotification_contains,omitempty"`
+EmergencyNotificationNotContains *string `json:"emergencyNotification_not_contains,omitempty"`
+EmergencyNotificationStartsWith *string `json:"emergencyNotification_starts_with,omitempty"`
+EmergencyNotificationNotStartsWith *string `json:"emergencyNotification_not_starts_with,omitempty"`
+EmergencyNotificationEndsWith *string `json:"emergencyNotification_ends_with,omitempty"`
+EmergencyNotificationNotEndsWith *string `json:"emergencyNotification_not_ends_with,omitempty"`
+SystemNotification *string `json:"systemNotification,omitempty"`
+SystemNotificationNot *string `json:"systemNotification_not,omitempty"`
+SystemNotificationIn []string `json:"systemNotification_in,omitempty"`
+SystemNotificationNotIn []string `json:"systemNotification_not_in,omitempty"`
+SystemNotificationLt *string `json:"systemNotification_lt,omitempty"`
+SystemNotificationLte *string `json:"systemNotification_lte,omitempty"`
+SystemNotificationGt *string `json:"systemNotification_gt,omitempty"`
+SystemNotificationGte *string `json:"systemNotification_gte,omitempty"`
+SystemNotificationContains *string `json:"systemNotification_contains,omitempty"`
+SystemNotificationNotContains *string `json:"systemNotification_not_contains,omitempty"`
+SystemNotificationStartsWith *string `json:"systemNotification_starts_with,omitempty"`
+SystemNotificationNotStartsWith *string `json:"systemNotification_not_starts_with,omitempty"`
+SystemNotificationEndsWith *string `json:"systemNotification_ends_with,omitempty"`
+SystemNotificationNotEndsWith *string `json:"systemNotification_not_ends_with,omitempty"`
+VpnAccount *string `json:"vpnAccount,omitempty"`
+VpnAccountNot *string `json:"vpnAccount_not,omitempty"`
+VpnAccountIn []string `json:"vpnAccount_in,omitempty"`
+VpnAccountNotIn []string `json:"vpnAccount_not_in,omitempty"`
+VpnAccountLt *string `json:"vpnAccount_lt,omitempty"`
+VpnAccountLte *string `json:"vpnAccount_lte,omitempty"`
+VpnAccountGt *string `json:"vpnAccount_gt,omitempty"`
+VpnAccountGte *string `json:"vpnAccount_gte,omitempty"`
+VpnAccountContains *string `json:"vpnAccount_contains,omitempty"`
+VpnAccountNotContains *string `json:"vpnAccount_not_contains,omitempty"`
+VpnAccountStartsWith *string `json:"vpnAccount_starts_with,omitempty"`
+VpnAccountNotStartsWith *string `json:"vpnAccount_not_starts_with,omitempty"`
+VpnAccountEndsWith *string `json:"vpnAccount_ends_with,omitempty"`
+VpnAccountNotEndsWith *string `json:"vpnAccount_not_ends_with,omitempty"`
+Note *string `json:"note,omitempty"`
+NoteNot *string `json:"note_not,omitempty"`
+NoteIn []string `json:"note_in,omitempty"`
+NoteNotIn []string `json:"note_not_in,omitempty"`
+NoteLt *string `json:"note_lt,omitempty"`
+NoteLte *string `json:"note_lte,omitempty"`
+NoteGt *string `json:"note_gt,omitempty"`
+NoteGte *string `json:"note_gte,omitempty"`
+NoteContains *string `json:"note_contains,omitempty"`
+NoteNotContains *string `json:"note_not_contains,omitempty"`
+NoteStartsWith *string `json:"note_starts_with,omitempty"`
+NoteNotStartsWith *string `json:"note_not_starts_with,omitempty"`
+NoteEndsWith *string `json:"note_ends_with,omitempty"`
+NoteNotEndsWith *string `json:"note_not_ends_with,omitempty"`
+And []ContactWhereInput `json:"AND,omitempty"`
+Or []ContactWhereInput `json:"OR,omitempty"`
+Not []ContactWhereInput `json:"NOT,omitempty"`
+          }
+
+      type ContactUpdateManyDataInput struct {
+        LastName *string `json:"lastName,omitempty"`
+FirstName *string `json:"firstName,omitempty"`
+PhoneMain *string `json:"phoneMain,omitempty"`
+PhoneMobile *string `json:"phoneMobile,omitempty"`
+Email *string `json:"email,omitempty"`
+DbAccessType *string `json:"dbAccessType,omitempty"`
+EmergencyNotification *string `json:"emergencyNotification,omitempty"`
+SystemNotification *string `json:"systemNotification,omitempty"`
+VpnAccount *string `json:"vpnAccount,omitempty"`
+Note *string `json:"note,omitempty"`
+          }
+
+      type ServiceScalarWhereInput struct {
+        ID *string `json:"id,omitempty"`
+IDNot *string `json:"id_not,omitempty"`
+IDIn []string `json:"id_in,omitempty"`
+IDNotIn []string `json:"id_not_in,omitempty"`
+IDLt *string `json:"id_lt,omitempty"`
+IDLte *string `json:"id_lte,omitempty"`
+IDGt *string `json:"id_gt,omitempty"`
+IDGte *string `json:"id_gte,omitempty"`
+IDContains *string `json:"id_contains,omitempty"`
+IDNotContains *string `json:"id_not_contains,omitempty"`
+IDStartsWith *string `json:"id_starts_with,omitempty"`
+IDNotStartsWith *string `json:"id_not_starts_with,omitempty"`
+IDEndsWith *string `json:"id_ends_with,omitempty"`
+IDNotEndsWith *string `json:"id_not_ends_with,omitempty"`
+CreatedAt *string `json:"createdAt,omitempty"`
+CreatedAtNot *string `json:"createdAt_not,omitempty"`
+CreatedAtIn []string `json:"createdAt_in,omitempty"`
+CreatedAtNotIn []string `json:"createdAt_not_in,omitempty"`
+CreatedAtLt *string `json:"createdAt_lt,omitempty"`
+CreatedAtLte *string `json:"createdAt_lte,omitempty"`
+CreatedAtGt *string `json:"createdAt_gt,omitempty"`
+CreatedAtGte *string `json:"createdAt_gte,omitempty"`
+UpdatedAt *string `json:"updatedAt,omitempty"`
+UpdatedAtNot *string `json:"updatedAt_not,omitempty"`
+UpdatedAtIn []string `json:"updatedAt_in,omitempty"`
+UpdatedAtNotIn []string `json:"updatedAt_not_in,omitempty"`
+UpdatedAtLt *string `json:"updatedAt_lt,omitempty"`
+UpdatedAtLte *string `json:"updatedAt_lte,omitempty"`
+UpdatedAtGt *string `json:"updatedAt_gt,omitempty"`
+UpdatedAtGte *string `json:"updatedAt_gte,omitempty"`
+Name *string `json:"name,omitempty"`
+NameNot *string `json:"name_not,omitempty"`
+NameIn []string `json:"name_in,omitempty"`
+NameNotIn []string `json:"name_not_in,omitempty"`
+NameLt *string `json:"name_lt,omitempty"`
+NameLte *string `json:"name_lte,omitempty"`
+NameGt *string `json:"name_gt,omitempty"`
+NameGte *string `json:"name_gte,omitempty"`
+NameContains *string `json:"name_contains,omitempty"`
+NameNotContains *string `json:"name_not_contains,omitempty"`
+NameStartsWith *string `json:"name_starts_with,omitempty"`
+NameNotStartsWith *string `json:"name_not_starts_with,omitempty"`
+NameEndsWith *string `json:"name_ends_with,omitempty"`
+NameNotEndsWith *string `json:"name_not_ends_with,omitempty"`
+Code *string `json:"code,omitempty"`
+CodeNot *string `json:"code_not,omitempty"`
+CodeIn []string `json:"code_in,omitempty"`
+CodeNotIn []string `json:"code_not_in,omitempty"`
+CodeLt *string `json:"code_lt,omitempty"`
+CodeLte *string `json:"code_lte,omitempty"`
+CodeGt *string `json:"code_gt,omitempty"`
+CodeGte *string `json:"code_gte,omitempty"`
+CodeContains *string `json:"code_contains,omitempty"`
+CodeNotContains *string `json:"code_not_contains,omitempty"`
+CodeStartsWith *string `json:"code_starts_with,omitempty"`
+CodeNotStartsWith *string `json:"code_not_starts_with,omitempty"`
+CodeEndsWith *string `json:"code_ends_with,omitempty"`
+CodeNotEndsWith *string `json:"code_not_ends_with,omitempty"`
+Description *string `json:"description,omitempty"`
+DescriptionNot *string `json:"description_not,omitempty"`
+DescriptionIn []string `json:"description_in,omitempty"`
+DescriptionNotIn []string `json:"description_not_in,omitempty"`
+DescriptionLt *string `json:"description_lt,omitempty"`
+DescriptionLte *string `json:"description_lte,omitempty"`
+DescriptionGt *string `json:"description_gt,omitempty"`
+DescriptionGte *string `json:"description_gte,omitempty"`
+DescriptionContains *string `json:"description_contains,omitempty"`
+DescriptionNotContains *string `json:"description_not_contains,omitempty"`
+DescriptionStartsWith *string `json:"description_starts_with,omitempty"`
+DescriptionNotStartsWith *string `json:"description_not_starts_with,omitempty"`
+DescriptionEndsWith *string `json:"description_ends_with,omitempty"`
+DescriptionNotEndsWith *string `json:"description_not_ends_with,omitempty"`
+Status *string `json:"status,omitempty"`
+StatusNot *string `json:"status_not,omitempty"`
+StatusIn []string `json:"status_in,omitempty"`
+StatusNotIn []string `json:"status_not_in,omitempty"`
+StatusLt *string `json:"status_lt,omitempty"`
+StatusLte *string `json:"status_lte,omitempty"`
+StatusGt *string `json:"status_gt,omitempty"`
+StatusGte *string `json:"status_gte,omitempty"`
+StatusContains *string `json:"status_contains,omitempty"`
+StatusNotContains *string `json:"status_not_contains,omitempty"`
+StatusStartsWith *string `json:"status_starts_with,omitempty"`
+StatusNotStartsWith *string `json:"status_not_starts_with,omitempty"`
+StatusEndsWith *string `json:"status_ends_with,omitempty"`
+StatusNotEndsWith *string `json:"status_not_ends_with,omitempty"`
+Type *string `json:"type,omitempty"`
+TypeNot *string `json:"type_not,omitempty"`
+TypeIn []string `json:"type_in,omitempty"`
+TypeNotIn []string `json:"type_not_in,omitempty"`
+TypeLt *string `json:"type_lt,omitempty"`
+TypeLte *string `json:"type_lte,omitempty"`
+TypeGt *string `json:"type_gt,omitempty"`
+TypeGte *string `json:"type_gte,omitempty"`
+TypeContains *string `json:"type_contains,omitempty"`
+TypeNotContains *string `json:"type_not_contains,omitempty"`
+TypeStartsWith *string `json:"type_starts_with,omitempty"`
+TypeNotStartsWith *string `json:"type_not_starts_with,omitempty"`
+TypeEndsWith *string `json:"type_ends_with,omitempty"`
+TypeNotEndsWith *string `json:"type_not_ends_with,omitempty"`
+Version *string `json:"version,omitempty"`
+VersionNot *string `json:"version_not,omitempty"`
+VersionIn []string `json:"version_in,omitempty"`
+VersionNotIn []string `json:"version_not_in,omitempty"`
+VersionLt *string `json:"version_lt,omitempty"`
+VersionLte *string `json:"version_lte,omitempty"`
+VersionGt *string `json:"version_gt,omitempty"`
+VersionGte *string `json:"version_gte,omitempty"`
+VersionContains *string `json:"version_contains,omitempty"`
+VersionNotContains *string `json:"version_not_contains,omitempty"`
+VersionStartsWith *string `json:"version_starts_with,omitempty"`
+VersionNotStartsWith *string `json:"version_not_starts_with,omitempty"`
+VersionEndsWith *string `json:"version_ends_with,omitempty"`
+VersionNotEndsWith *string `json:"version_not_ends_with,omitempty"`
+CanBeRemoved *bool `json:"canBeRemoved,omitempty"`
+CanBeRemovedNot *bool `json:"canBeRemoved_not,omitempty"`
+And []ServiceScalarWhereInput `json:"AND,omitempty"`
+Or []ServiceScalarWhereInput `json:"OR,omitempty"`
+Not []ServiceScalarWhereInput `json:"NOT,omitempty"`
+          }
+
+      type ServiceWhereUniqueInput struct {
+        ID *string `json:"id,omitempty"`
+Code *string `json:"code,omitempty"`
           }
 
       type ServiceWhereInput struct {
@@ -550,23 +1290,77 @@ Or []ServiceWhereInput `json:"OR,omitempty"`
 Not []ServiceWhereInput `json:"NOT,omitempty"`
           }
 
-      type ServiceUpdateManyWithWhereNestedInput struct {
-        Where ServiceScalarWhereInput `json:"where"`
-Data ServiceUpdateManyDataInput `json:"data"`
+      type ContactCreateInput struct {
+        LastName string `json:"lastName"`
+FirstName string `json:"firstName"`
+PhoneMain *string `json:"phoneMain,omitempty"`
+PhoneMobile *string `json:"phoneMobile,omitempty"`
+Email string `json:"email"`
+DbAccessType *string `json:"dbAccessType,omitempty"`
+EmergencyNotification *string `json:"emergencyNotification,omitempty"`
+SystemNotification *string `json:"systemNotification,omitempty"`
+VpnAccount *string `json:"vpnAccount,omitempty"`
+Note *string `json:"note,omitempty"`
           }
 
-      type ServiceUpdateManyInput struct {
-        Create []ServiceCreateInput `json:"create,omitempty"`
-Update []ServiceUpdateWithWhereUniqueNestedInput `json:"update,omitempty"`
-Upsert []ServiceUpsertWithWhereUniqueNestedInput `json:"upsert,omitempty"`
-Delete []ServiceWhereUniqueInput `json:"delete,omitempty"`
-Connect []ServiceWhereUniqueInput `json:"connect,omitempty"`
-Disconnect []ServiceWhereUniqueInput `json:"disconnect,omitempty"`
-DeleteMany []ServiceScalarWhereInput `json:"deleteMany,omitempty"`
-UpdateMany []ServiceUpdateManyWithWhereNestedInput `json:"updateMany,omitempty"`
+      type UserSubscriptionWhereInput struct {
+        MutationIn []MutationType `json:"mutation_in,omitempty"`
+UpdatedFieldsContains *string `json:"updatedFields_contains,omitempty"`
+UpdatedFieldsContainsEvery []string `json:"updatedFields_contains_every,omitempty"`
+UpdatedFieldsContainsSome []string `json:"updatedFields_contains_some,omitempty"`
+Node *UserWhereInput `json:"node,omitempty"`
+And []UserSubscriptionWhereInput `json:"AND,omitempty"`
+Or []UserSubscriptionWhereInput `json:"OR,omitempty"`
+Not []UserSubscriptionWhereInput `json:"NOT,omitempty"`
           }
 
-      type ServiceScalarWhereInput struct {
+      type ContactUpdateInput struct {
+        LastName *string `json:"lastName,omitempty"`
+FirstName *string `json:"firstName,omitempty"`
+PhoneMain *string `json:"phoneMain,omitempty"`
+PhoneMobile *string `json:"phoneMobile,omitempty"`
+Email *string `json:"email,omitempty"`
+DbAccessType *string `json:"dbAccessType,omitempty"`
+EmergencyNotification *string `json:"emergencyNotification,omitempty"`
+SystemNotification *string `json:"systemNotification,omitempty"`
+VpnAccount *string `json:"vpnAccount,omitempty"`
+Note *string `json:"note,omitempty"`
+          }
+
+      type ServiceUpdateInput struct {
+        Name *string `json:"name,omitempty"`
+Code *string `json:"code,omitempty"`
+Description *string `json:"description,omitempty"`
+Status *string `json:"status,omitempty"`
+Type *string `json:"type,omitempty"`
+Version *string `json:"version,omitempty"`
+CanBeRemoved *bool `json:"canBeRemoved,omitempty"`
+DependentServices *ServiceUpdateManyInput `json:"dependentServices,omitempty"`
+          }
+
+      type ContactUpdateManyMutationInput struct {
+        LastName *string `json:"lastName,omitempty"`
+FirstName *string `json:"firstName,omitempty"`
+PhoneMain *string `json:"phoneMain,omitempty"`
+PhoneMobile *string `json:"phoneMobile,omitempty"`
+Email *string `json:"email,omitempty"`
+DbAccessType *string `json:"dbAccessType,omitempty"`
+EmergencyNotification *string `json:"emergencyNotification,omitempty"`
+SystemNotification *string `json:"systemNotification,omitempty"`
+VpnAccount *string `json:"vpnAccount,omitempty"`
+Note *string `json:"note,omitempty"`
+          }
+
+      type UserCreateInput struct {
+        Name string `json:"name"`
+          }
+
+      type ContactUpdateManyWithWhereNestedInput struct {
+        Where ContactScalarWhereInput `json:"where"`
+Data ContactUpdateManyDataInput `json:"data"`
+          }
+
+      type CustomerWhereInput struct {
         ID *string `json:"id,omitempty"`
 IDNot *string `json:"id_not,omitempty"`
 IDIn []string `json:"id_in,omitempty"`
@@ -611,48 +1405,90 @@ NameStartsWith *string `json:"name_starts_with,omitempty"`
 NameNotStartsWith *string `json:"name_not_starts_with,omitempty"`
 NameEndsWith *string `json:"name_ends_with,omitempty"`
 NameNotEndsWith *string `json:"name_not_ends_with,omitempty"`
-Code *string `json:"code,omitempty"`
-CodeNot *string `json:"code_not,omitempty"`
-CodeIn []string `json:"code_in,omitempty"`
-CodeNotIn []string `json:"code_not_in,omitempty"`
-CodeLt *string `json:"code_lt,omitempty"`
-CodeLte *string `json:"code_lte,omitempty"`
-CodeGt *string `json:"code_gt,omitempty"`
-CodeGte *string `json:"code_gte,omitempty"`
-CodeContains *string `json:"code_contains,omitempty"`
-CodeNotContains *string `json:"code_not_contains,omitempty"`
-CodeStartsWith *string `json:"code_starts_with,omitempty"`
-CodeNotStartsWith *string `json:"code_not_starts_with,omitempty"`
-CodeEndsWith *string `json:"code_ends_with,omitempty"`
-CodeNotEndsWith *string `json:"code_not_ends_with,omitempty"`
-Description *string `json:"description,omitempty"`
-DescriptionNot *string `json:"description_not,omitempty"`
-DescriptionIn []string `json:"description_in,omitempty"`
-DescriptionNotIn []string `json:"description_not_in,omitempty"`
-DescriptionLt *string `json:"description_lt,omitempty"`
-DescriptionLte *string `json:"description_lte,omitempty"`
-DescriptionGt *string `json:"description_gt,omitempty"`
-DescriptionGte *string `json:"description_gte,omitempty"`
-DescriptionContains *string `json:"description_contains,omitempty"`
-DescriptionNotContains *string `json:"description_not_contains,omitempty"`
-DescriptionStartsWith *string `json:"description_starts_with,omitempty"`
-DescriptionNotStartsWith *string `json:"description_not_starts_with,omitempty"`
-DescriptionEndsWith *string `json:"description_ends_with,omitempty"`
-DescriptionNotEndsWith *string `json:"description_not_ends_with,omitempty"`
-Status *string `json:"status,omitempty"`
-StatusNot *string `json:"status_not,omitempty"`
-StatusIn []string `json:"status_in,omitempty"`
-StatusNotIn []string `json:"status_not_in,omitempty"`
-StatusLt *string `json:"status_lt,omitempty"`
-StatusLte *string `json:"status_lte,omitempty"`
-StatusGt *string `json:"status_gt,omitempty"`
-StatusGte *string `json:"status_gte,omitempty"`
-StatusContains *string `json:"status_contains,omitempty"`
-StatusNotContains *string `json:"status_not_contains,omitempty"`
-StatusStartsWith *string `json:"status_starts_with,omitempty"`
-StatusNotStartsWith *string `json:"status_not_starts_with,omitempty"`
-StatusEndsWith *string `json:"status_ends_with,omitempty"`
-StatusNotEndsWith *string `json:"status_not_ends_with,omitempty"`
+CompanyId *string `json:"companyId,omitempty"`
+CompanyIdNot *string `json:"companyId_not,omitempty"`
+CompanyIdIn []string `json:"companyId_in,omitempty"`
+CompanyIdNotIn []string `json:"companyId_not_in,omitempty"`
+CompanyIdLt *string `json:"companyId_lt,omitempty"`
+CompanyIdLte *string `json:"companyId_lte,omitempty"`
+CompanyIdGt *string `json:"companyId_gt,omitempty"`
+CompanyIdGte *string `json:"companyId_gte,omitempty"`
+CompanyIdContains *string `json:"companyId_contains,omitempty"`
+CompanyIdNotContains *string `json:"companyId_not_contains,omitempty"`
+CompanyIdStartsWith *string `json:"companyId_starts_with,omitempty"`
+CompanyIdNotStartsWith *string `json:"companyId_not_starts_with,omitempty"`
+CompanyIdEndsWith *string `json:"companyId_ends_with,omitempty"`
+CompanyIdNotEndsWith *string `json:"companyId_not_ends_with,omitempty"`
+AlternateName *string `json:"alternateName,omitempty"`
+AlternateNameNot *string `json:"alternateName_not,omitempty"`
+AlternateNameIn []string `json:"alternateName_in,omitempty"`
+AlternateNameNotIn []string `json:"alternateName_not_in,omitempty"`
+AlternateNameLt *string `json:"alternateName_lt,omitempty"`
+AlternateNameLte *string `json:"alternateName_lte,omitempty"`
+AlternateNameGt *string `json:"alternateName_gt,omitempty"`
+AlternateNameGte *string `json:"alternateName_gte,omitempty"`
+AlternateNameContains *string `json:"alternateName_contains,omitempty"`
+AlternateNameNotContains *string `json:"alternateName_not_contains,omitempty"`
+AlternateNameStartsWith *string `json:"alternateName_starts_with,omitempty"`
+AlternateNameNotStartsWith *string `json:"alternateName_not_starts_with,omitempty"`
+AlternateNameEndsWith *string `json:"alternateName_ends_with,omitempty"`
+AlternateNameNotEndsWith *string `json:"alternateName_not_ends_with,omitempty"`
+SapId *string `json:"sapId,omitempty"`
+SapIdNot *string `json:"sapId_not,omitempty"`
+SapIdIn []string `json:"sapId_in,omitempty"`
+SapIdNotIn []string `json:"sapId_not_in,omitempty"`
+SapIdLt *string `json:"sapId_lt,omitempty"`
+SapIdLte *string `json:"sapId_lte,omitempty"`
+SapIdGt *string `json:"sapId_gt,omitempty"`
+SapIdGte *string `json:"sapId_gte,omitempty"`
+SapIdContains *string `json:"sapId_contains,omitempty"`
+SapIdNotContains *string `json:"sapId_not_contains,omitempty"`
+SapIdStartsWith *string `json:"sapId_starts_with,omitempty"`
+SapIdNotStartsWith *string `json:"sapId_not_starts_with,omitempty"`
+SapIdEndsWith *string `json:"sapId_ends_with,omitempty"`
+SapIdNotEndsWith *string `json:"sapId_not_ends_with,omitempty"`
+SupportSiteId *string `json:"supportSiteId,omitempty"`
+SupportSiteIdNot *string `json:"supportSiteId_not,omitempty"`
+SupportSiteIdIn []string `json:"supportSiteId_in,omitempty"`
+SupportSiteIdNotIn []string `json:"supportSiteId_not_in,omitempty"`
+SupportSiteIdLt *string `json:"supportSiteId_lt,omitempty"`
+SupportSiteIdLte *string `json:"supportSiteId_lte,omitempty"`
+SupportSiteIdGt *string `json:"supportSiteId_gt,omitempty"`
+SupportSiteIdGte *string `json:"supportSiteId_gte,omitempty"`
+SupportSiteIdContains *string `json:"supportSiteId_contains,omitempty"`
+SupportSiteIdNotContains *string `json:"supportSiteId_not_contains,omitempty"`
+SupportSiteIdStartsWith *string `json:"supportSiteId_starts_with,omitempty"`
+SupportSiteIdNotStartsWith *string `json:"supportSiteId_not_starts_with,omitempty"`
+SupportSiteIdEndsWith *string `json:"supportSiteId_ends_with,omitempty"`
+SupportSiteIdNotEndsWith *string `json:"supportSiteId_not_ends_with,omitempty"`
+PlatformTenantId *string `json:"platformTenantId,omitempty"`
+PlatformTenantIdNot *string `json:"platformTenantId_not,omitempty"`
+PlatformTenantIdIn []string `json:"platformTenantId_in,omitempty"`
+PlatformTenantIdNotIn []string `json:"platformTenantId_not_in,omitempty"`
+PlatformTenantIdLt *string `json:"platformTenantId_lt,omitempty"`
+PlatformTenantIdLte *string `json:"platformTenantId_lte,omitempty"`
+PlatformTenantIdGt *string `json:"platformTenantId_gt,omitempty"`
+PlatformTenantIdGte *string `json:"platformTenantId_gte,omitempty"`
+PlatformTenantIdContains *string `json:"platformTenantId_contains,omitempty"`
+PlatformTenantIdNotContains *string `json:"platformTenantId_not_contains,omitempty"`
+PlatformTenantIdStartsWith *string `json:"platformTenantId_starts_with,omitempty"`
+PlatformTenantIdNotStartsWith *string `json:"platformTenantId_not_starts_with,omitempty"`
+PlatformTenantIdEndsWith *string `json:"platformTenantId_ends_with,omitempty"`
+PlatformTenantIdNotEndsWith *string `json:"platformTenantId_not_ends_with,omitempty"`
+PortalOrgId *string `json:"portalOrgId,omitempty"`
+PortalOrgIdNot *string `json:"portalOrgId_not,omitempty"`
+PortalOrgIdIn []string `json:"portalOrgId_in,omitempty"`
+PortalOrgIdNotIn []string `json:"portalOrgId_not_in,omitempty"`
+PortalOrgIdLt *string `json:"portalOrgId_lt,omitempty"`
+PortalOrgIdLte *string `json:"portalOrgId_lte,omitempty"`
+PortalOrgIdGt *string `json:"portalOrgId_gt,omitempty"`
+PortalOrgIdGte *string `json:"portalOrgId_gte,omitempty"`
+PortalOrgIdContains *string `json:"portalOrgId_contains,omitempty"`
+PortalOrgIdNotContains *string `json:"portalOrgId_not_contains,omitempty"`
+PortalOrgIdStartsWith *string `json:"portalOrgId_starts_with,omitempty"`
+PortalOrgIdNotStartsWith *string `json:"portalOrgId_not_starts_with,omitempty"`
+PortalOrgIdEndsWith *string `json:"portalOrgId_ends_with,omitempty"`
+PortalOrgIdNotEndsWith *string `json:"portalOrgId_not_ends_with,omitempty"`
 Type *string `json:"type,omitempty"`
 TypeNot *string `json:"type_not,omitempty"`
 TypeIn []string `json:"type_in,omitempty"`
@@ -667,36 +1503,260 @@ TypeStartsWith *string `json:"type_starts_with,omitempty"`
 TypeNotStartsWith *string `json:"type_not_starts_with,omitempty"`
 TypeEndsWith *string `json:"type_ends_with,omitempty"`
 TypeNotEndsWith *string `json:"type_not_ends_with,omitempty"`
-Version *string `json:"version,omitempty"`
-VersionNot *string `json:"version_not,omitempty"`
-VersionIn []string `json:"version_in,omitempty"`
-VersionNotIn []string `json:"version_not_in,omitempty"`
-VersionLt *string `json:"version_lt,omitempty"`
-VersionLte *string `json:"version_lte,omitempty"`
-VersionGt *string `json:"version_gt,omitempty"`
-VersionGte *string `json:"version_gte,omitempty"`
-VersionContains *string `json:"version_contains,omitempty"`
-VersionNotContains *string `json:"version_not_contains,omitempty"`
-VersionStartsWith *string `json:"version_starts_with,omitempty"`
-VersionNotStartsWith *string `json:"version_not_starts_with,omitempty"`
-VersionEndsWith *string `json:"version_ends_with,omitempty"`
-VersionNotEndsWith *string `json:"version_not_ends_with,omitempty"`
-CanBeRemoved *bool `json:"canBeRemoved,omitempty"`
-CanBeRemovedNot *bool `json:"canBeRemoved_not,omitempty"`
-And []ServiceScalarWhereInput `json:"AND,omitempty"`
-Or []ServiceScalarWhereInput `json:"OR,omitempty"`
-Not []ServiceScalarWhereInput `json:"NOT,omitempty"`
+Status *string `json:"status,omitempty"`
+StatusNot *string `json:"status_not,omitempty"`
+StatusIn []string `json:"status_in,omitempty"`
+StatusNotIn []string `json:"status_not_in,omitempty"`
+StatusLt *string `json:"status_lt,omitempty"`
+StatusLte *string `json:"status_lte,omitempty"`
+StatusGt *string `json:"status_gt,omitempty"`
+StatusGte *string `json:"status_gte,omitempty"`
+StatusContains *string `json:"status_contains,omitempty"`
+StatusNotContains *string `json:"status_not_contains,omitempty"`
+StatusStartsWith *string `json:"status_starts_with,omitempty"`
+StatusNotStartsWith *string `json:"status_not_starts_with,omitempty"`
+StatusEndsWith *string `json:"status_ends_with,omitempty"`
+StatusNotEndsWith *string `json:"status_not_ends_with,omitempty"`
+ProdAvailabilityGoal *string `json:"prodAvailabilityGoal,omitempty"`
+ProdAvailabilityGoalNot *string `json:"prodAvailabilityGoal_not,omitempty"`
+ProdAvailabilityGoalIn []string `json:"prodAvailabilityGoal_in,omitempty"`
+ProdAvailabilityGoalNotIn []string `json:"prodAvailabilityGoal_not_in,omitempty"`
+ProdAvailabilityGoalLt *string `json:"prodAvailabilityGoal_lt,omitempty"`
+ProdAvailabilityGoalLte *string `json:"prodAvailabilityGoal_lte,omitempty"`
+ProdAvailabilityGoalGt *string `json:"prodAvailabilityGoal_gt,omitempty"`
+ProdAvailabilityGoalGte *string `json:"prodAvailabilityGoal_gte,omitempty"`
+ProdAvailabilityGoalContains *string `json:"prodAvailabilityGoal_contains,omitempty"`
+ProdAvailabilityGoalNotContains *string `json:"prodAvailabilityGoal_not_contains,omitempty"`
+ProdAvailabilityGoalStartsWith *string `json:"prodAvailabilityGoal_starts_with,omitempty"`
+ProdAvailabilityGoalNotStartsWith *string `json:"prodAvailabilityGoal_not_starts_with,omitempty"`
+ProdAvailabilityGoalEndsWith *string `json:"prodAvailabilityGoal_ends_with,omitempty"`
+ProdAvailabilityGoalNotEndsWith *string `json:"prodAvailabilityGoal_not_ends_with,omitempty"`
+SlaVarianceMajor *string `json:"slaVarianceMajor,omitempty"`
+SlaVarianceMajorNot *string `json:"slaVarianceMajor_not,omitempty"`
+SlaVarianceMajorIn []string `json:"slaVarianceMajor_in,omitempty"`
+SlaVarianceMajorNotIn []string `json:"slaVarianceMajor_not_in,omitempty"`
+SlaVarianceMajorLt *string `json:"slaVarianceMajor_lt,omitempty"`
+SlaVarianceMajorLte *string `json:"slaVarianceMajor_lte,omitempty"`
+SlaVarianceMajorGt *string `json:"slaVarianceMajor_gt,omitempty"`
+SlaVarianceMajorGte *string `json:"slaVarianceMajor_gte,omitempty"`
+SlaVarianceMajorContains *string `json:"slaVarianceMajor_contains,omitempty"`
+SlaVarianceMajorNotContains *string `json:"slaVarianceMajor_not_contains,omitempty"`
+SlaVarianceMajorStartsWith *string `json:"slaVarianceMajor_starts_with,omitempty"`
+SlaVarianceMajorNotStartsWith *string `json:"slaVarianceMajor_not_starts_with,omitempty"`
+SlaVarianceMajorEndsWith *string `json:"slaVarianceMajor_ends_with,omitempty"`
+SlaVarianceMajorNotEndsWith *string `json:"slaVarianceMajor_not_ends_with,omitempty"`
+SlaVariableMinor *string `json:"slaVariableMinor,omitempty"`
+SlaVariableMinorNot *string `json:"slaVariableMinor_not,omitempty"`
+SlaVariableMinorIn []string `json:"slaVariableMinor_in,omitempty"`
+SlaVariableMinorNotIn []string `json:"slaVariableMinor_not_in,omitempty"`
+SlaVariableMinorLt *string `json:"slaVariableMinor_lt,omitempty"`
+SlaVariableMinorLte *string `json:"slaVariableMinor_lte,omitempty"`
+SlaVariableMinorGt *string `json:"slaVariableMinor_gt,omitempty"`
+SlaVariableMinorGte *string `json:"slaVariableMinor_gte,omitempty"`
+SlaVariableMinorContains *string `json:"slaVariableMinor_contains,omitempty"`
+SlaVariableMinorNotContains *string `json:"slaVariableMinor_not_contains,omitempty"`
+SlaVariableMinorStartsWith *string `json:"slaVariableMinor_starts_with,omitempty"`
+SlaVariableMinorNotStartsWith *string `json:"slaVariableMinor_not_starts_with,omitempty"`
+SlaVariableMinorEndsWith *string `json:"slaVariableMinor_ends_with,omitempty"`
+SlaVariableMinorNotEndsWith *string `json:"slaVariableMinor_not_ends_with,omitempty"`
+SlaId *string `json:"slaId,omitempty"`
+SlaIdNot *string `json:"slaId_not,omitempty"`
+SlaIdIn []string `json:"slaId_in,omitempty"`
+SlaIdNotIn []string `json:"slaId_not_in,omitempty"`
+SlaIdLt *string `json:"slaId_lt,omitempty"`
+SlaIdLte *string `json:"slaId_lte,omitempty"`
+SlaIdGt *string `json:"slaId_gt,omitempty"`
+SlaIdGte *string `json:"slaId_gte,omitempty"`
+SlaIdContains *string `json:"slaId_contains,omitempty"`
+SlaIdNotContains *string `json:"slaId_not_contains,omitempty"`
+SlaIdStartsWith *string `json:"slaId_starts_with,omitempty"`
+SlaIdNotStartsWith *string `json:"slaId_not_starts_with,omitempty"`
+SlaIdEndsWith *string `json:"slaId_ends_with,omitempty"`
+SlaIdNotEndsWith *string `json:"slaId_not_ends_with,omitempty"`
+RequirePerfReport *bool `json:"requirePerfReport,omitempty"`
+RequirePerfReportNot *bool `json:"requirePerfReport_not,omitempty"`
+ContactsEvery *ContactWhereInput `json:"contacts_every,omitempty"`
+ContactsSome *ContactWhereInput `json:"contacts_some,omitempty"`
+ContactsNone *ContactWhereInput `json:"contacts_none,omitempty"`
+And []CustomerWhereInput `json:"AND,omitempty"`
+Or []CustomerWhereInput `json:"OR,omitempty"`
+Not []CustomerWhereInput `json:"NOT,omitempty"`
           }
 
-      type ServiceSubscriptionWhereInput struct {
-        MutationIn []MutationType `json:"mutation_in,omitempty"`
-UpdatedFieldsContains *string `json:"updatedFields_contains,omitempty"`
-UpdatedFieldsContainsEvery []string `json:"updatedFields_contains_every,omitempty"`
-UpdatedFieldsContainsSome []string `json:"updatedFields_contains_some,omitempty"`
-Node *ServiceWhereInput `json:"node,omitempty"`
-And []ServiceSubscriptionWhereInput `json:"AND,omitempty"`
-Or []ServiceSubscriptionWhereInput `json:"OR,omitempty"`
-Not []ServiceSubscriptionWhereInput `json:"NOT,omitempty"`
+      type ContactScalarWhereInput struct {
+        ID *string `json:"id,omitempty"`
+IDNot *string `json:"id_not,omitempty"`
+IDIn []string `json:"id_in,omitempty"`
+IDNotIn []string `json:"id_not_in,omitempty"`
+IDLt *string `json:"id_lt,omitempty"`
+IDLte *string `json:"id_lte,omitempty"`
+IDGt *string `json:"id_gt,omitempty"`
+IDGte *string `json:"id_gte,omitempty"`
+IDContains *string `json:"id_contains,omitempty"`
+IDNotContains *string `json:"id_not_contains,omitempty"`
+IDStartsWith *string `json:"id_starts_with,omitempty"`
+IDNotStartsWith *string `json:"id_not_starts_with,omitempty"`
+IDEndsWith *string `json:"id_ends_with,omitempty"`
+IDNotEndsWith *string `json:"id_not_ends_with,omitempty"`
+CreatedAt *string `json:"createdAt,omitempty"`
+CreatedAtNot *string `json:"createdAt_not,omitempty"`
+CreatedAtIn []string `json:"createdAt_in,omitempty"`
+CreatedAtNotIn []string `json:"createdAt_not_in,omitempty"`
+CreatedAtLt *string `json:"createdAt_lt,omitempty"`
+CreatedAtLte *string `json:"createdAt_lte,omitempty"`
+CreatedAtGt *string `json:"createdAt_gt,omitempty"`
+CreatedAtGte *string `json:"createdAt_gte,omitempty"`
+UpdatedAt *string `json:"updatedAt,omitempty"`
+UpdatedAtNot *string `json:"updatedAt_not,omitempty"`
+UpdatedAtIn []string `json:"updatedAt_in,omitempty"`
+UpdatedAtNotIn []string `json:"updatedAt_not_in,omitempty"`
+UpdatedAtLt *string `json:"updatedAt_lt,omitempty"`
+UpdatedAtLte *string `json:"updatedAt_lte,omitempty"`
+UpdatedAtGt *string `json:"updatedAt_gt,omitempty"`
+UpdatedAtGte *string `json:"updatedAt_gte,omitempty"`
+LastName *string `json:"lastName,omitempty"`
+LastNameNot *string `json:"lastName_not,omitempty"`
+LastNameIn []string `json:"lastName_in,omitempty"`
+LastNameNotIn []string `json:"lastName_not_in,omitempty"`
+LastNameLt *string `json:"lastName_lt,omitempty"`
+LastNameLte *string `json:"lastName_lte,omitempty"`
+LastNameGt *string `json:"lastName_gt,omitempty"`
+LastNameGte *string `json:"lastName_gte,omitempty"`
+LastNameContains *string `json:"lastName_contains,omitempty"`
+LastNameNotContains *string `json:"lastName_not_contains,omitempty"`
+LastNameStartsWith *string `json:"lastName_starts_with,omitempty"`
+LastNameNotStartsWith *string `json:"lastName_not_starts_with,omitempty"`
+LastNameEndsWith *string `json:"lastName_ends_with,omitempty"`
+LastNameNotEndsWith *string `json:"lastName_not_ends_with,omitempty"`
+FirstName *string `json:"firstName,omitempty"`
+FirstNameNot *string `json:"firstName_not,omitempty"`
+FirstNameIn []string `json:"firstName_in,omitempty"`
+FirstNameNotIn []string `json:"firstName_not_in,omitempty"`
+FirstNameLt *string `json:"firstName_lt,omitempty"`
+FirstNameLte *string `json:"firstName_lte,omitempty"`
+FirstNameGt *string `json:"firstName_gt,omitempty"`
+FirstNameGte *string `json:"firstName_gte,omitempty"`
+FirstNameContains *string `json:"firstName_contains,omitempty"`
+FirstNameNotContains *string `json:"firstName_not_contains,omitempty"`
+FirstNameStartsWith *string `json:"firstName_starts_with,omitempty"`
+FirstNameNotStartsWith *string `json:"firstName_not_starts_with,omitempty"`
+FirstNameEndsWith *string `json:"firstName_ends_with,omitempty"`
+FirstNameNotEndsWith *string `json:"firstName_not_ends_with,omitempty"`
+PhoneMain *string `json:"phoneMain,omitempty"`
+PhoneMainNot *string `json:"phoneMain_not,omitempty"`
+PhoneMainIn []string `json:"phoneMain_in,omitempty"`
+PhoneMainNotIn []string `json:"phoneMain_not_in,omitempty"`
+PhoneMainLt *string `json:"phoneMain_lt,omitempty"`
+PhoneMainLte *string `json:"phoneMain_lte,omitempty"`
+PhoneMainGt *string `json:"phoneMain_gt,omitempty"`
+PhoneMainGte *string `json:"phoneMain_gte,omitempty"`
+PhoneMainContains *string `json:"phoneMain_contains,omitempty"`
+PhoneMainNotContains *string `json:"phoneMain_not_contains,omitempty"`
+PhoneMainStartsWith *string `json:"phoneMain_starts_with,omitempty"`
+PhoneMainNotStartsWith *string `json:"phoneMain_not_starts_with,omitempty"`
+PhoneMainEndsWith *string `json:"phoneMain_ends_with,omitempty"`
+PhoneMainNotEndsWith *string `json:"phoneMain_not_ends_with,omitempty"`
+PhoneMobile *string `json:"phoneMobile,omitempty"`
+PhoneMobileNot *string `json:"phoneMobile_not,omitempty"`
+PhoneMobileIn []string `json:"phoneMobile_in,omitempty"`
+PhoneMobileNotIn []string `json:"phoneMobile_not_in,omitempty"`
+PhoneMobileLt *string `json:"phoneMobile_lt,omitempty"`
+PhoneMobileLte *string `json:"phoneMobile_lte,omitempty"`
+PhoneMobileGt *string `json:"phoneMobile_gt,omitempty"`
+PhoneMobileGte *string `json:"phoneMobile_gte,omitempty"`
+PhoneMobileContains *string `json:"phoneMobile_contains,omitempty"`
+PhoneMobileNotContains *string `json:"phoneMobile_not_contains,omitempty"`
+PhoneMobileStartsWith *string `json:"phoneMobile_starts_with,omitempty"`
+PhoneMobileNotStartsWith *string `json:"phoneMobile_not_starts_with,omitempty"`
+PhoneMobileEndsWith *string `json:"phoneMobile_ends_with,omitempty"`
+PhoneMobileNotEndsWith *string `json:"phoneMobile_not_ends_with,omitempty"`
+Email *string `json:"email,omitempty"`
+EmailNot *string `json:"email_not,omitempty"`
+EmailIn []string `json:"email_in,omitempty"`
+EmailNotIn []string `json:"email_not_in,omitempty"`
+EmailLt *string `json:"email_lt,omitempty"`
+EmailLte *string `json:"email_lte,omitempty"`
+EmailGt *string `json:"email_gt,omitempty"`
+EmailGte *string `json:"email_gte,omitempty"`
+EmailContains *string `json:"email_contains,omitempty"`
+EmailNotContains *string `json:"email_not_contains,omitempty"`
+EmailStartsWith *string `json:"email_starts_with,omitempty"`
+EmailNotStartsWith *string `json:"email_not_starts_with,omitempty"`
+EmailEndsWith *string `json:"email_ends_with,omitempty"`
+EmailNotEndsWith *string `json:"email_not_ends_with,omitempty"`
+DbAccessType *string `json:"dbAccessType,omitempty"`
+DbAccessTypeNot *string `json:"dbAccessType_not,omitempty"`
+DbAccessTypeIn []string `json:"dbAccessType_in,omitempty"`
+DbAccessTypeNotIn []string `json:"dbAccessType_not_in,omitempty"`
+DbAccessTypeLt *string `json:"dbAccessType_lt,omitempty"`
+DbAccessTypeLte *string `json:"dbAccessType_lte,omitempty"`
+DbAccessTypeGt *string `json:"dbAccessType_gt,omitempty"`
+DbAccessTypeGte *string `json:"dbAccessType_gte,omitempty"`
+DbAccessTypeContains *string `json:"dbAccessType_contains,omitempty"`
+DbAccessTypeNotContains *string `json:"dbAccessType_not_contains,omitempty"`
+DbAccessTypeStartsWith *string `json:"dbAccessType_starts_with,omitempty"`
+DbAccessTypeNotStartsWith *string `json:"dbAccessType_not_starts_with,omitempty"`
+DbAccessTypeEndsWith *string `json:"dbAccessType_ends_with,omitempty"`
+DbAccessTypeNotEndsWith *string `json:"dbAccessType_not_ends_with,omitempty"`
+EmergencyNotification *string `json:"emergencyNotification,omitempty"`
+EmergencyNotificationNot *string `json:"emergencyNotification_not,omitempty"`
+EmergencyNotificationIn []string `json:"emergencyNotification_in,omitempty"`
+EmergencyNotificationNotIn []string `json:"emergencyNotification_not_in,omitempty"`
+EmergencyNotificationLt *string `json:"emergencyNotification_lt,omitempty"`
+EmergencyNotificationLte *string `json:"emergencyNotification_lte,omitempty"`
+EmergencyNotificationGt *string `json:"emergencyNotification_gt,omitempty"`
+EmergencyNotificationGte *string `json:"emergencyNotification_gte,omitempty"`
+EmergencyNotificationContains *string `json:"emergencyNotification_contains,omitempty"`
+EmergencyNotificationNotContains *string `json:"emergencyNotification_not_contains,omitempty"`
+EmergencyNotificationStartsWith *string `json:"emergencyNotification_starts_with,omitempty"`
+EmergencyNotificationNotStartsWith *string `json:"emergencyNotification_not_starts_with,omitempty"`
+EmergencyNotificationEndsWith *string `json:"emergencyNotification_ends_with,omitempty"`
+EmergencyNotificationNotEndsWith *string `json:"emergencyNotification_not_ends_with,omitempty"`
+SystemNotification *string `json:"systemNotification,omitempty"`
+SystemNotificationNot *string `json:"systemNotification_not,omitempty"`
+SystemNotificationIn []string `json:"systemNotification_in,omitempty"`
+SystemNotificationNotIn []string `json:"systemNotification_not_in,omitempty"`
+SystemNotificationLt *string `json:"systemNotification_lt,omitempty"`
+SystemNotificationLte *string `json:"systemNotification_lte,omitempty"`
+SystemNotificationGt *string `json:"systemNotification_gt,omitempty"`
+SystemNotificationGte *string `json:"systemNotification_gte,omitempty"`
+SystemNotificationContains *string `json:"systemNotification_contains,omitempty"`
+SystemNotificationNotContains *string `json:"systemNotification_not_contains,omitempty"`
+SystemNotificationStartsWith *string `json:"systemNotification_starts_with,omitempty"`
+SystemNotificationNotStartsWith *string `json:"systemNotification_not_starts_with,omitempty"`
+SystemNotificationEndsWith *string `json:"systemNotification_ends_with,omitempty"`
+SystemNotificationNotEndsWith *string `json:"systemNotification_not_ends_with,omitempty"`
+VpnAccount *string `json:"vpnAccount,omitempty"`
+VpnAccountNot *string `json:"vpnAccount_not,omitempty"`
+VpnAccountIn []string `json:"vpnAccount_in,omitempty"`
+VpnAccountNotIn []string `json:"vpnAccount_not_in,omitempty"`
+VpnAccountLt *string `json:"vpnAccount_lt,omitempty"`
+VpnAccountLte *string `json:"vpnAccount_lte,omitempty"`
+VpnAccountGt *string `json:"vpnAccount_gt,omitempty"`
+VpnAccountGte *string `json:"vpnAccount_gte,omitempty"`
+VpnAccountContains *string `json:"vpnAccount_contains,omitempty"`
+VpnAccountNotContains *string `json:"vpnAccount_not_contains,omitempty"`
+VpnAccountStartsWith *string `json:"vpnAccount_starts_with,omitempty"`
+VpnAccountNotStartsWith *string `json:"vpnAccount_not_starts_with,omitempty"`
+VpnAccountEndsWith *string `json:"vpnAccount_ends_with,omitempty"`
+VpnAccountNotEndsWith *string `json:"vpnAccount_not_ends_with,omitempty"`
+Note *string `json:"note,omitempty"`
+NoteNot *string `json:"note_not,omitempty"`
+NoteIn []string `json:"note_in,omitempty"`
+NoteNotIn []string `json:"note_not_in,omitempty"`
+NoteLt *string `json:"note_lt,omitempty"`
+NoteLte *string `json:"note_lte,omitempty"`
+NoteGt *string `json:"note_gt,omitempty"`
+NoteGte *string `json:"note_gte,omitempty"`
+NoteContains *string `json:"note_contains,omitempty"`
+NoteNotContains *string `json:"note_not_contains,omitempty"`
+NoteStartsWith *string `json:"note_starts_with,omitempty"`
+NoteNotStartsWith *string `json:"note_not_starts_with,omitempty"`
+NoteEndsWith *string `json:"note_ends_with,omitempty"`
+NoteNotEndsWith *string `json:"note_not_ends_with,omitempty"`
+And []ContactScalarWhereInput `json:"AND,omitempty"`
+Or []ContactScalarWhereInput `json:"OR,omitempty"`
+Not []ContactScalarWhereInput `json:"NOT,omitempty"`
           }
 
       type ServiceUpsertWithWhereUniqueNestedInput struct {
@@ -705,8 +1765,104 @@ Update ServiceUpdateDataInput `json:"update"`
 Create ServiceCreateInput `json:"create"`
           }
 
-      type UserUpdateInput struct {
+      type CustomerCreateInput struct {
+        Name string `json:"name"`
+CompanyId *string `json:"companyId,omitempty"`
+AlternateName *string `json:"alternateName,omitempty"`
+SapId *string `json:"sapId,omitempty"`
+SupportSiteId *string `json:"supportSiteId,omitempty"`
+PlatformTenantId *string `json:"platformTenantId,omitempty"`
+PortalOrgId *string `json:"portalOrgId,omitempty"`
+Type *string `json:"type,omitempty"`
+Status *string `json:"status,omitempty"`
+ProdAvailabilityGoal *string `json:"prodAvailabilityGoal,omitempty"`
+SlaVarianceMajor *string `json:"slaVarianceMajor,omitempty"`
+SlaVariableMinor *string `json:"slaVariableMinor,omitempty"`
+SlaId *string `json:"slaId,omitempty"`
+RequirePerfReport *bool `json:"requirePerfReport,omitempty"`
+Contacts *ContactCreateManyInput `json:"contacts,omitempty"`
+          }
+
+      type CustomerSubscriptionWhereInput struct {
+        MutationIn []MutationType `json:"mutation_in,omitempty"`
+UpdatedFieldsContains *string `json:"updatedFields_contains,omitempty"`
+UpdatedFieldsContainsEvery []string `json:"updatedFields_contains_every,omitempty"`
+UpdatedFieldsContainsSome []string `json:"updatedFields_contains_some,omitempty"`
+Node *CustomerWhereInput `json:"node,omitempty"`
+And []CustomerSubscriptionWhereInput `json:"AND,omitempty"`
+Or []CustomerSubscriptionWhereInput `json:"OR,omitempty"`
+Not []CustomerSubscriptionWhereInput `json:"NOT,omitempty"`
+          }
+
+      type ContactCreateManyInput struct {
+        Create []ContactCreateInput `json:"create,omitempty"`
+Connect []ContactWhereUniqueInput `json:"connect,omitempty"`
+          }
+
+      type UserUpdateManyMutationInput struct {
         Name *string `json:"name,omitempty"`
+          }
+
+      type ContactUpdateDataInput struct {
+        LastName *string `json:"lastName,omitempty"`
+FirstName *string `json:"firstName,omitempty"`
+PhoneMain *string `json:"phoneMain,omitempty"`
+PhoneMobile *string `json:"phoneMobile,omitempty"`
+Email *string `json:"email,omitempty"`
+DbAccessType *string `json:"dbAccessType,omitempty"`
+EmergencyNotification *string `json:"emergencyNotification,omitempty"`
+SystemNotification *string `json:"systemNotification,omitempty"`
+VpnAccount *string `json:"vpnAccount,omitempty"`
+Note *string `json:"note,omitempty"`
+          }
+
+      type ContactUpdateWithWhereUniqueNestedInput struct {
+        Where ContactWhereUniqueInput `json:"where"`
+Data ContactUpdateDataInput `json:"data"`
+          }
+
+      type ContactUpdateManyInput struct {
+        Create []ContactCreateInput `json:"create,omitempty"`
+Update []ContactUpdateWithWhereUniqueNestedInput `json:"update,omitempty"`
+Upsert []ContactUpsertWithWhereUniqueNestedInput `json:"upsert,omitempty"`
+Delete []ContactWhereUniqueInput `json:"delete,omitempty"`
+Connect []ContactWhereUniqueInput `json:"connect,omitempty"`
+Disconnect []ContactWhereUniqueInput `json:"disconnect,omitempty"`
+DeleteMany []ContactScalarWhereInput `json:"deleteMany,omitempty"`
+UpdateMany []ContactUpdateManyWithWhereNestedInput `json:"updateMany,omitempty"`
+          }
+
+      type CustomerUpdateInput struct {
+        Name *string `json:"name,omitempty"`
+CompanyId *string `json:"companyId,omitempty"`
+AlternateName *string `json:"alternateName,omitempty"`
+SapId *string `json:"sapId,omitempty"`
+SupportSiteId *string `json:"supportSiteId,omitempty"`
+PlatformTenantId *string `json:"platformTenantId,omitempty"`
+PortalOrgId *string `json:"portalOrgId,omitempty"`
+Type *string `json:"type,omitempty"`
+Status *string `json:"status,omitempty"`
+ProdAvailabilityGoal *string `json:"prodAvailabilityGoal,omitempty"`
+SlaVarianceMajor *string `json:"slaVarianceMajor,omitempty"`
+SlaVariableMinor *string `json:"slaVariableMinor,omitempty"`
+SlaId *string `json:"slaId,omitempty"`
+RequirePerfReport *bool `json:"requirePerfReport,omitempty"`
+Contacts *ContactUpdateManyInput `json:"contacts,omitempty"`
+          }
+
+      type CustomerWhereUniqueInput struct {
+        ID *string `json:"id,omitempty"`
+          }
+
+      type ServiceUpdateManyInput struct {
+        Create []ServiceCreateInput `json:"create,omitempty"`
+Update []ServiceUpdateWithWhereUniqueNestedInput `json:"update,omitempty"`
+Upsert []ServiceUpsertWithWhereUniqueNestedInput `json:"upsert,omitempty"`
+Delete []ServiceWhereUniqueInput `json:"delete,omitempty"`
+Connect []ServiceWhereUniqueInput `json:"connect,omitempty"`
+Disconnect []ServiceWhereUniqueInput `json:"disconnect,omitempty"`
+DeleteMany []ServiceScalarWhereInput `json:"deleteMany,omitempty"`
+UpdateMany []ServiceUpdateManyWithWhereNestedInput `json:"updateMany,omitempty"`
           }
 
       type ServiceUpdateDataInput struct {
@@ -720,74 +1876,9 @@ CanBeRemoved *bool `json:"canBeRemoved,omitempty"`
 DependentServices *ServiceUpdateManyInput `json:"dependentServices,omitempty"`
           }
 
-      type ServiceUpdateManyMutationInput struct {
-        Name *string `json:"name,omitempty"`
-Code *string `json:"code,omitempty"`
-Description *string `json:"description,omitempty"`
-Status *string `json:"status,omitempty"`
-Type *string `json:"type,omitempty"`
-Version *string `json:"version,omitempty"`
-CanBeRemoved *bool `json:"canBeRemoved,omitempty"`
-          }
-
-      type ServiceUpdateManyDataInput struct {
-        Name *string `json:"name,omitempty"`
-Code *string `json:"code,omitempty"`
-Description *string `json:"description,omitempty"`
-Status *string `json:"status,omitempty"`
-Type *string `json:"type,omitempty"`
-Version *string `json:"version,omitempty"`
-CanBeRemoved *bool `json:"canBeRemoved,omitempty"`
-          }
-
-      type ServiceUpdateInput struct {
-        Name *string `json:"name,omitempty"`
-Code *string `json:"code,omitempty"`
-Description *string `json:"description,omitempty"`
-Status *string `json:"status,omitempty"`
-Type *string `json:"type,omitempty"`
-Version *string `json:"version,omitempty"`
-CanBeRemoved *bool `json:"canBeRemoved,omitempty"`
-DependentServices *ServiceUpdateManyInput `json:"dependentServices,omitempty"`
-          }
-
-      type ServiceUpdateWithWhereUniqueNestedInput struct {
-        Where ServiceWhereUniqueInput `json:"where"`
-Data ServiceUpdateDataInput `json:"data"`
-          }
-
-      type ServiceCreateInput struct {
-        Name string `json:"name"`
-Code string `json:"code"`
-Description *string `json:"description,omitempty"`
-Status string `json:"status"`
-Type string `json:"type"`
-Version *string `json:"version,omitempty"`
-CanBeRemoved *bool `json:"canBeRemoved,omitempty"`
-DependentServices *ServiceCreateManyInput `json:"dependentServices,omitempty"`
-          }
-
-      type UserSubscriptionWhereInput struct {
-        MutationIn []MutationType `json:"mutation_in,omitempty"`
-UpdatedFieldsContains *string `json:"updatedFields_contains,omitempty"`
-UpdatedFieldsContainsEvery []string `json:"updatedFields_contains_every,omitempty"`
-UpdatedFieldsContainsSome []string `json:"updatedFields_contains_some,omitempty"`
-Node *UserWhereInput `json:"node,omitempty"`
-And []UserSubscriptionWhereInput `json:"AND,omitempty"`
-Or []UserSubscriptionWhereInput `json:"OR,omitempty"`
-Not []UserSubscriptionWhereInput `json:"NOT,omitempty"`
-          }
-
-      type UserWhereUniqueInput struct {
-        ID *string `json:"id,omitempty"`
-          }
-
-      type UserCreateInput struct {
-        Name string `json:"name"`
-          }
-
-      type UserUpdateManyMutationInput struct {
-        Name *string `json:"name,omitempty"`
+      type ServiceUpdateManyWithWhereNestedInput struct {
+        Where ServiceScalarWhereInput `json:"where"`
+Data ServiceUpdateManyDataInput `json:"data"`
           }
 
 
@@ -828,6 +1919,89 @@ Not []UserSubscriptionWhereInput `json:"NOT,omitempty"`
 Name string `json:"name"`
         }
 
+        type CustomerExec struct {
+          exec *prisma.Exec
+        }
+
+        
+                type ContactsParamsExec struct {
+                  Where *ContactWhereInput
+OrderBy *ContactOrderByInput
+Skip *int32
+After *string
+Before *string
+First *int32
+Last *int32
+                }
+                func (instance *CustomerExec) Contacts(params *ContactsParamsExec) *ContactExecArray {
+                  var wparams *prisma.WhereParams
+                  if params != nil {
+                    wparams = &prisma.WhereParams{
+                      Where: params.Where,
+                      OrderBy: (*string)(params.OrderBy),
+                      Skip: params.Skip,
+                      After: params.After,
+                      Before: params.Before,
+                      First: params.First,
+                      Last: params.Last,
+                    }
+                  }
+
+                  ret := instance.exec.Client.GetMany(
+                    instance.exec,
+                    wparams,
+                    [3]string{"ContactWhereInput", "ContactOrderByInput", "Contact"},
+                    "contacts",
+                    []string{"id","createdAt","updatedAt","lastName","firstName","phoneMain","phoneMobile","email","dbAccessType","emergencyNotification","systemNotification","vpnAccount","note"})
+
+                  return &ContactExecArray{ret}
+                }
+
+          func (instance CustomerExec) Exec(ctx context.Context) (*Customer, error) {
+            var v Customer
+            ok, err := instance.exec.Exec(ctx, &v)
+            if err != nil {
+              return nil, err
+            }
+            if !ok {
+              return nil, ErrNoResult
+            }
+            return &v, nil
+          }
+
+          func (instance CustomerExec) Exists(ctx context.Context) (bool, error) {
+            return instance.exec.Exists(ctx)
+          }
+
+          type CustomerExecArray struct {
+            exec *prisma.Exec
+          }
+
+          func (instance CustomerExecArray) Exec(ctx context.Context) ([]Customer, error) {
+            var v []Customer
+            err := instance.exec.ExecArray(ctx, &v)
+            return v, err
+          }
+
+        type Customer struct {
+          ID string `json:"id"`
+CreatedAt string `json:"createdAt"`
+UpdatedAt string `json:"updatedAt"`
+Name string `json:"name"`
+CompanyId *string `json:"companyId,omitempty"`
+AlternateName *string `json:"alternateName,omitempty"`
+SapId *string `json:"sapId,omitempty"`
+SupportSiteId *string `json:"supportSiteId,omitempty"`
+PlatformTenantId *string `json:"platformTenantId,omitempty"`
+PortalOrgId *string `json:"portalOrgId,omitempty"`
+Type *string `json:"type,omitempty"`
+Status *string `json:"status,omitempty"`
+ProdAvailabilityGoal *string `json:"prodAvailabilityGoal,omitempty"`
+SlaVarianceMajor *string `json:"slaVarianceMajor,omitempty"`
+SlaVariableMinor *string `json:"slaVariableMinor,omitempty"`
+SlaId *string `json:"slaId,omitempty"`
+RequirePerfReport *bool `json:"requirePerfReport,omitempty"`
+        }
 
         type ServiceSubscriptionPayloadExec struct {
           exec *prisma.Exec
@@ -884,6 +2058,100 @@ Name string `json:"name"`
 
         type ServiceSubscriptionPayload struct {
           UpdatedFields []string `json:"updatedFields,omitempty"`
+        }
+
+
+        type ContactEdgeExec struct {
+          exec *prisma.Exec
+        }
+
+        
+                func (instance *ContactEdgeExec) Node() *ContactExec {
+                  ret := instance.exec.Client.GetOne(
+                    instance.exec,
+                    nil,
+                    [2]string{"", "Contact"},
+                    "node",
+                    []string{"id","createdAt","updatedAt","lastName","firstName","phoneMain","phoneMobile","email","dbAccessType","emergencyNotification","systemNotification","vpnAccount","note"})
+
+                  return &ContactExec{ret}
+                }
+
+          func (instance ContactEdgeExec) Exec(ctx context.Context) (*ContactEdge, error) {
+            var v ContactEdge
+            ok, err := instance.exec.Exec(ctx, &v)
+            if err != nil {
+              return nil, err
+            }
+            if !ok {
+              return nil, ErrNoResult
+            }
+            return &v, nil
+          }
+
+          func (instance ContactEdgeExec) Exists(ctx context.Context) (bool, error) {
+            return instance.exec.Exists(ctx)
+          }
+
+          type ContactEdgeExecArray struct {
+            exec *prisma.Exec
+          }
+
+          func (instance ContactEdgeExecArray) Exec(ctx context.Context) ([]ContactEdge, error) {
+            var v []ContactEdge
+            err := instance.exec.ExecArray(ctx, &v)
+            return v, err
+          }
+
+        type ContactEdge struct {
+          Cursor string `json:"cursor"`
+        }
+
+
+        type UserEdgeExec struct {
+          exec *prisma.Exec
+        }
+
+        
+                func (instance *UserEdgeExec) Node() *UserExec {
+                  ret := instance.exec.Client.GetOne(
+                    instance.exec,
+                    nil,
+                    [2]string{"", "User"},
+                    "node",
+                    []string{"id","name"})
+
+                  return &UserExec{ret}
+                }
+
+          func (instance UserEdgeExec) Exec(ctx context.Context) (*UserEdge, error) {
+            var v UserEdge
+            ok, err := instance.exec.Exec(ctx, &v)
+            if err != nil {
+              return nil, err
+            }
+            if !ok {
+              return nil, ErrNoResult
+            }
+            return &v, nil
+          }
+
+          func (instance UserEdgeExec) Exists(ctx context.Context) (bool, error) {
+            return instance.exec.Exists(ctx)
+          }
+
+          type UserEdgeExecArray struct {
+            exec *prisma.Exec
+          }
+
+          func (instance UserEdgeExecArray) Exec(ctx context.Context) ([]UserEdge, error) {
+            var v []UserEdge
+            err := instance.exec.ExecArray(ctx, &v)
+            return v, err
+          }
+
+        type UserEdge struct {
+          Cursor string `json:"cursor"`
         }
 
         type UserSubscriptionPayloadExec struct {
@@ -943,6 +2211,82 @@ Name string `json:"name"`
           UpdatedFields []string `json:"updatedFields,omitempty"`
         }
 
+        type UserExec struct {
+          exec *prisma.Exec
+        }
+
+        
+
+          func (instance UserExec) Exec(ctx context.Context) (*User, error) {
+            var v User
+            ok, err := instance.exec.Exec(ctx, &v)
+            if err != nil {
+              return nil, err
+            }
+            if !ok {
+              return nil, ErrNoResult
+            }
+            return &v, nil
+          }
+
+          func (instance UserExec) Exists(ctx context.Context) (bool, error) {
+            return instance.exec.Exists(ctx)
+          }
+
+          type UserExecArray struct {
+            exec *prisma.Exec
+          }
+
+          func (instance UserExecArray) Exec(ctx context.Context) ([]User, error) {
+            var v []User
+            err := instance.exec.ExecArray(ctx, &v)
+            return v, err
+          }
+
+        type User struct {
+          ID string `json:"id"`
+Name string `json:"name"`
+        }
+
+        type PageInfoExec struct {
+          exec *prisma.Exec
+        }
+
+        
+
+          func (instance PageInfoExec) Exec(ctx context.Context) (*PageInfo, error) {
+            var v PageInfo
+            ok, err := instance.exec.Exec(ctx, &v)
+            if err != nil {
+              return nil, err
+            }
+            if !ok {
+              return nil, ErrNoResult
+            }
+            return &v, nil
+          }
+
+          func (instance PageInfoExec) Exists(ctx context.Context) (bool, error) {
+            return instance.exec.Exists(ctx)
+          }
+
+          type PageInfoExecArray struct {
+            exec *prisma.Exec
+          }
+
+          func (instance PageInfoExecArray) Exec(ctx context.Context) ([]PageInfo, error) {
+            var v []PageInfo
+            err := instance.exec.ExecArray(ctx, &v)
+            return v, err
+          }
+
+        type PageInfo struct {
+          HasNextPage bool `json:"hasNextPage"`
+HasPreviousPage bool `json:"hasPreviousPage"`
+StartCursor *string `json:"startCursor,omitempty"`
+EndCursor *string `json:"endCursor,omitempty"`
+        }
+
         type ServiceEdgeExec struct {
           exec *prisma.Exec
         }
@@ -989,12 +2333,12 @@ Name string `json:"name"`
           Cursor string `json:"cursor"`
         }
 
-        type UserConnectionExec struct {
+        type ContactConnectionExec struct {
           exec *prisma.Exec
         }
 
         
-                func (instance *UserConnectionExec) PageInfo() *PageInfoExec {
+                func (instance *ContactConnectionExec) PageInfo() *PageInfoExec {
                   ret := instance.exec.Client.GetOne(
                     instance.exec,
                     nil,
@@ -1005,22 +2349,22 @@ Name string `json:"name"`
                   return &PageInfoExec{ret}
                 }
 
-                func (instance *UserConnectionExec) Edges() *UserEdgeExec {
+                func (instance *ContactConnectionExec) Edges() *ContactEdgeExec {
                   ret := instance.exec.Client.GetOne(
                     instance.exec,
                     nil,
-                    [2]string{"", "UserEdge"},
+                    [2]string{"", "ContactEdge"},
                     "edges",
                     []string{"cursor"})
 
-                  return &UserEdgeExec{ret}
+                  return &ContactEdgeExec{ret}
                 }
 
-                  func (instance *UserConnectionExec) Aggregate(ctx context.Context) (Aggregate, error) {
+                  func (instance *ContactConnectionExec) Aggregate(ctx context.Context) (Aggregate, error) {
                     ret := instance.exec.Client.GetOne(
                       instance.exec,
                       nil,
-                      [2]string{"", "AggregateUser"},
+                      [2]string{"", "AggregateContact"},
                       "aggregate",
                       []string{"count"})
 
@@ -1029,8 +2373,8 @@ Name string `json:"name"`
                     return v, err
                   }
 
-          func (instance UserConnectionExec) Exec(ctx context.Context) (*UserConnection, error) {
-            var v UserConnection
+          func (instance ContactConnectionExec) Exec(ctx context.Context) (*ContactConnection, error) {
+            var v ContactConnection
             ok, err := instance.exec.Exec(ctx, &v)
             if err != nil {
               return nil, err
@@ -1041,178 +2385,23 @@ Name string `json:"name"`
             return &v, nil
           }
 
-          func (instance UserConnectionExec) Exists(ctx context.Context) (bool, error) {
+          func (instance ContactConnectionExec) Exists(ctx context.Context) (bool, error) {
             return instance.exec.Exists(ctx)
           }
 
-          type UserConnectionExecArray struct {
+          type ContactConnectionExecArray struct {
             exec *prisma.Exec
           }
 
-          func (instance UserConnectionExecArray) Exec(ctx context.Context) ([]UserConnection, error) {
-            var v []UserConnection
+          func (instance ContactConnectionExecArray) Exec(ctx context.Context) ([]ContactConnection, error) {
+            var v []ContactConnection
             err := instance.exec.ExecArray(ctx, &v)
             return v, err
           }
 
-        type UserConnection struct {
+        type ContactConnection struct {
           
         }
-
-        type ServicePreviousValuesExec struct {
-          exec *prisma.Exec
-        }
-
-        
-
-          func (instance ServicePreviousValuesExec) Exec(ctx context.Context) (*ServicePreviousValues, error) {
-            var v ServicePreviousValues
-            ok, err := instance.exec.Exec(ctx, &v)
-            if err != nil {
-              return nil, err
-            }
-            if !ok {
-              return nil, ErrNoResult
-            }
-            return &v, nil
-          }
-
-          func (instance ServicePreviousValuesExec) Exists(ctx context.Context) (bool, error) {
-            return instance.exec.Exists(ctx)
-          }
-
-          type ServicePreviousValuesExecArray struct {
-            exec *prisma.Exec
-          }
-
-          func (instance ServicePreviousValuesExecArray) Exec(ctx context.Context) ([]ServicePreviousValues, error) {
-            var v []ServicePreviousValues
-            err := instance.exec.ExecArray(ctx, &v)
-            return v, err
-          }
-
-        type ServicePreviousValues struct {
-          ID string `json:"id"`
-CreatedAt string `json:"createdAt"`
-UpdatedAt string `json:"updatedAt"`
-Name string `json:"name"`
-Code string `json:"code"`
-Description *string `json:"description,omitempty"`
-Status string `json:"status"`
-Type string `json:"type"`
-Version *string `json:"version,omitempty"`
-CanBeRemoved bool `json:"canBeRemoved"`
-        }
-
-        type ServiceConnectionExec struct {
-          exec *prisma.Exec
-        }
-
-        
-                func (instance *ServiceConnectionExec) PageInfo() *PageInfoExec {
-                  ret := instance.exec.Client.GetOne(
-                    instance.exec,
-                    nil,
-                    [2]string{"", "PageInfo"},
-                    "pageInfo",
-                    []string{"hasNextPage","hasPreviousPage","startCursor","endCursor"})
-
-                  return &PageInfoExec{ret}
-                }
-
-                func (instance *ServiceConnectionExec) Edges() *ServiceEdgeExec {
-                  ret := instance.exec.Client.GetOne(
-                    instance.exec,
-                    nil,
-                    [2]string{"", "ServiceEdge"},
-                    "edges",
-                    []string{"cursor"})
-
-                  return &ServiceEdgeExec{ret}
-                }
-
-                  func (instance *ServiceConnectionExec) Aggregate(ctx context.Context) (Aggregate, error) {
-                    ret := instance.exec.Client.GetOne(
-                      instance.exec,
-                      nil,
-                      [2]string{"", "AggregateService"},
-                      "aggregate",
-                      []string{"count"})
-
-                    var v Aggregate
-                    _, err := ret.Exec(ctx, &v)
-                    return v, err
-                  }
-
-          func (instance ServiceConnectionExec) Exec(ctx context.Context) (*ServiceConnection, error) {
-            var v ServiceConnection
-            ok, err := instance.exec.Exec(ctx, &v)
-            if err != nil {
-              return nil, err
-            }
-            if !ok {
-              return nil, ErrNoResult
-            }
-            return &v, nil
-          }
-
-          func (instance ServiceConnectionExec) Exists(ctx context.Context) (bool, error) {
-            return instance.exec.Exists(ctx)
-          }
-
-          type ServiceConnectionExecArray struct {
-            exec *prisma.Exec
-          }
-
-          func (instance ServiceConnectionExecArray) Exec(ctx context.Context) ([]ServiceConnection, error) {
-            var v []ServiceConnection
-            err := instance.exec.ExecArray(ctx, &v)
-            return v, err
-          }
-
-        type ServiceConnection struct {
-          
-        }
-
-        type PageInfoExec struct {
-          exec *prisma.Exec
-        }
-
-        
-
-          func (instance PageInfoExec) Exec(ctx context.Context) (*PageInfo, error) {
-            var v PageInfo
-            ok, err := instance.exec.Exec(ctx, &v)
-            if err != nil {
-              return nil, err
-            }
-            if !ok {
-              return nil, ErrNoResult
-            }
-            return &v, nil
-          }
-
-          func (instance PageInfoExec) Exists(ctx context.Context) (bool, error) {
-            return instance.exec.Exists(ctx)
-          }
-
-          type PageInfoExecArray struct {
-            exec *prisma.Exec
-          }
-
-          func (instance PageInfoExecArray) Exec(ctx context.Context) ([]PageInfo, error) {
-            var v []PageInfo
-            err := instance.exec.ExecArray(ctx, &v)
-            return v, err
-          }
-
-        type PageInfo struct {
-          HasNextPage bool `json:"hasNextPage"`
-HasPreviousPage bool `json:"hasPreviousPage"`
-StartCursor *string `json:"startCursor,omitempty"`
-EndCursor *string `json:"endCursor,omitempty"`
-        }
-
 
         type ServiceExec struct {
           exec *prisma.Exec
@@ -1291,24 +2480,72 @@ Version *string `json:"version,omitempty"`
 CanBeRemoved bool `json:"canBeRemoved"`
         }
 
-        type UserEdgeExec struct {
+        type ContactExec struct {
           exec *prisma.Exec
         }
 
         
-                func (instance *UserEdgeExec) Node() *UserExec {
+
+          func (instance ContactExec) Exec(ctx context.Context) (*Contact, error) {
+            var v Contact
+            ok, err := instance.exec.Exec(ctx, &v)
+            if err != nil {
+              return nil, err
+            }
+            if !ok {
+              return nil, ErrNoResult
+            }
+            return &v, nil
+          }
+
+          func (instance ContactExec) Exists(ctx context.Context) (bool, error) {
+            return instance.exec.Exists(ctx)
+          }
+
+          type ContactExecArray struct {
+            exec *prisma.Exec
+          }
+
+          func (instance ContactExecArray) Exec(ctx context.Context) ([]Contact, error) {
+            var v []Contact
+            err := instance.exec.ExecArray(ctx, &v)
+            return v, err
+          }
+
+        type Contact struct {
+          ID string `json:"id"`
+CreatedAt string `json:"createdAt"`
+UpdatedAt string `json:"updatedAt"`
+LastName string `json:"lastName"`
+FirstName string `json:"firstName"`
+PhoneMain *string `json:"phoneMain,omitempty"`
+PhoneMobile *string `json:"phoneMobile,omitempty"`
+Email string `json:"email"`
+DbAccessType *string `json:"dbAccessType,omitempty"`
+EmergencyNotification *string `json:"emergencyNotification,omitempty"`
+SystemNotification *string `json:"systemNotification,omitempty"`
+VpnAccount *string `json:"vpnAccount,omitempty"`
+Note *string `json:"note,omitempty"`
+        }
+
+        type CustomerEdgeExec struct {
+          exec *prisma.Exec
+        }
+
+        
+                func (instance *CustomerEdgeExec) Node() *CustomerExec {
                   ret := instance.exec.Client.GetOne(
                     instance.exec,
                     nil,
-                    [2]string{"", "User"},
+                    [2]string{"", "Customer"},
                     "node",
-                    []string{"id","name"})
+                    []string{"id","createdAt","updatedAt","name","companyId","alternateName","sapId","supportSiteId","platformTenantId","portalOrgId","type","status","prodAvailabilityGoal","slaVarianceMajor","slaVariableMinor","slaId","requirePerfReport"})
 
-                  return &UserExec{ret}
+                  return &CustomerExec{ret}
                 }
 
-          func (instance UserEdgeExec) Exec(ctx context.Context) (*UserEdge, error) {
-            var v UserEdge
+          func (instance CustomerEdgeExec) Exec(ctx context.Context) (*CustomerEdge, error) {
+            var v CustomerEdge
             ok, err := instance.exec.Exec(ctx, &v)
             if err != nil {
               return nil, err
@@ -1319,33 +2556,91 @@ CanBeRemoved bool `json:"canBeRemoved"`
             return &v, nil
           }
 
-          func (instance UserEdgeExec) Exists(ctx context.Context) (bool, error) {
+          func (instance CustomerEdgeExec) Exists(ctx context.Context) (bool, error) {
             return instance.exec.Exists(ctx)
           }
 
-          type UserEdgeExecArray struct {
+          type CustomerEdgeExecArray struct {
             exec *prisma.Exec
           }
 
-          func (instance UserEdgeExecArray) Exec(ctx context.Context) ([]UserEdge, error) {
-            var v []UserEdge
+          func (instance CustomerEdgeExecArray) Exec(ctx context.Context) ([]CustomerEdge, error) {
+            var v []CustomerEdge
             err := instance.exec.ExecArray(ctx, &v)
             return v, err
           }
 
-        type UserEdge struct {
+        type CustomerEdge struct {
           Cursor string `json:"cursor"`
         }
 
+        type ContactSubscriptionPayloadExec struct {
+          exec *prisma.Exec
+        }
 
-        type UserExec struct {
+        
+                func (instance *ContactSubscriptionPayloadExec) Node() *ContactExec {
+                  ret := instance.exec.Client.GetOne(
+                    instance.exec,
+                    nil,
+                    [2]string{"", "Contact"},
+                    "node",
+                    []string{"id","createdAt","updatedAt","lastName","firstName","phoneMain","phoneMobile","email","dbAccessType","emergencyNotification","systemNotification","vpnAccount","note"})
+
+                  return &ContactExec{ret}
+                }
+
+                func (instance *ContactSubscriptionPayloadExec) PreviousValues() *ContactPreviousValuesExec {
+                  ret := instance.exec.Client.GetOne(
+                    instance.exec,
+                    nil,
+                    [2]string{"", "ContactPreviousValues"},
+                    "previousValues",
+                    []string{"id","createdAt","updatedAt","lastName","firstName","phoneMain","phoneMobile","email","dbAccessType","emergencyNotification","systemNotification","vpnAccount","note"})
+
+                  return &ContactPreviousValuesExec{ret}
+                }
+
+          func (instance ContactSubscriptionPayloadExec) Exec(ctx context.Context) (*ContactSubscriptionPayload, error) {
+            var v ContactSubscriptionPayload
+            ok, err := instance.exec.Exec(ctx, &v)
+            if err != nil {
+              return nil, err
+            }
+            if !ok {
+              return nil, ErrNoResult
+            }
+            return &v, nil
+          }
+
+          func (instance ContactSubscriptionPayloadExec) Exists(ctx context.Context) (bool, error) {
+            return instance.exec.Exists(ctx)
+          }
+
+          type ContactSubscriptionPayloadExecArray struct {
+            exec *prisma.Exec
+          }
+
+          func (instance ContactSubscriptionPayloadExecArray) Exec(ctx context.Context) ([]ContactSubscriptionPayload, error) {
+            var v []ContactSubscriptionPayload
+            err := instance.exec.ExecArray(ctx, &v)
+            return v, err
+          }
+
+        type ContactSubscriptionPayload struct {
+          UpdatedFields []string `json:"updatedFields,omitempty"`
+        }
+
+
+
+        type CustomerPreviousValuesExec struct {
           exec *prisma.Exec
         }
 
         
 
-          func (instance UserExec) Exec(ctx context.Context) (*User, error) {
-            var v User
+          func (instance CustomerPreviousValuesExec) Exec(ctx context.Context) (*CustomerPreviousValues, error) {
+            var v CustomerPreviousValues
             ok, err := instance.exec.Exec(ctx, &v)
             if err != nil {
               return nil, err
@@ -1356,24 +2651,400 @@ CanBeRemoved bool `json:"canBeRemoved"`
             return &v, nil
           }
 
-          func (instance UserExec) Exists(ctx context.Context) (bool, error) {
+          func (instance CustomerPreviousValuesExec) Exists(ctx context.Context) (bool, error) {
             return instance.exec.Exists(ctx)
           }
 
-          type UserExecArray struct {
+          type CustomerPreviousValuesExecArray struct {
             exec *prisma.Exec
           }
 
-          func (instance UserExecArray) Exec(ctx context.Context) ([]User, error) {
-            var v []User
+          func (instance CustomerPreviousValuesExecArray) Exec(ctx context.Context) ([]CustomerPreviousValues, error) {
+            var v []CustomerPreviousValues
             err := instance.exec.ExecArray(ctx, &v)
             return v, err
           }
 
-        type User struct {
+        type CustomerPreviousValues struct {
           ID string `json:"id"`
+CreatedAt string `json:"createdAt"`
+UpdatedAt string `json:"updatedAt"`
 Name string `json:"name"`
+CompanyId *string `json:"companyId,omitempty"`
+AlternateName *string `json:"alternateName,omitempty"`
+SapId *string `json:"sapId,omitempty"`
+SupportSiteId *string `json:"supportSiteId,omitempty"`
+PlatformTenantId *string `json:"platformTenantId,omitempty"`
+PortalOrgId *string `json:"portalOrgId,omitempty"`
+Type *string `json:"type,omitempty"`
+Status *string `json:"status,omitempty"`
+ProdAvailabilityGoal *string `json:"prodAvailabilityGoal,omitempty"`
+SlaVarianceMajor *string `json:"slaVarianceMajor,omitempty"`
+SlaVariableMinor *string `json:"slaVariableMinor,omitempty"`
+SlaId *string `json:"slaId,omitempty"`
+RequirePerfReport *bool `json:"requirePerfReport,omitempty"`
         }
+
+        type CustomerSubscriptionPayloadExec struct {
+          exec *prisma.Exec
+        }
+
+        
+                func (instance *CustomerSubscriptionPayloadExec) Node() *CustomerExec {
+                  ret := instance.exec.Client.GetOne(
+                    instance.exec,
+                    nil,
+                    [2]string{"", "Customer"},
+                    "node",
+                    []string{"id","createdAt","updatedAt","name","companyId","alternateName","sapId","supportSiteId","platformTenantId","portalOrgId","type","status","prodAvailabilityGoal","slaVarianceMajor","slaVariableMinor","slaId","requirePerfReport"})
+
+                  return &CustomerExec{ret}
+                }
+
+                func (instance *CustomerSubscriptionPayloadExec) PreviousValues() *CustomerPreviousValuesExec {
+                  ret := instance.exec.Client.GetOne(
+                    instance.exec,
+                    nil,
+                    [2]string{"", "CustomerPreviousValues"},
+                    "previousValues",
+                    []string{"id","createdAt","updatedAt","name","companyId","alternateName","sapId","supportSiteId","platformTenantId","portalOrgId","type","status","prodAvailabilityGoal","slaVarianceMajor","slaVariableMinor","slaId","requirePerfReport"})
+
+                  return &CustomerPreviousValuesExec{ret}
+                }
+
+          func (instance CustomerSubscriptionPayloadExec) Exec(ctx context.Context) (*CustomerSubscriptionPayload, error) {
+            var v CustomerSubscriptionPayload
+            ok, err := instance.exec.Exec(ctx, &v)
+            if err != nil {
+              return nil, err
+            }
+            if !ok {
+              return nil, ErrNoResult
+            }
+            return &v, nil
+          }
+
+          func (instance CustomerSubscriptionPayloadExec) Exists(ctx context.Context) (bool, error) {
+            return instance.exec.Exists(ctx)
+          }
+
+          type CustomerSubscriptionPayloadExecArray struct {
+            exec *prisma.Exec
+          }
+
+          func (instance CustomerSubscriptionPayloadExecArray) Exec(ctx context.Context) ([]CustomerSubscriptionPayload, error) {
+            var v []CustomerSubscriptionPayload
+            err := instance.exec.ExecArray(ctx, &v)
+            return v, err
+          }
+
+        type CustomerSubscriptionPayload struct {
+          UpdatedFields []string `json:"updatedFields,omitempty"`
+        }
+
+        type ServicePreviousValuesExec struct {
+          exec *prisma.Exec
+        }
+
+        
+
+          func (instance ServicePreviousValuesExec) Exec(ctx context.Context) (*ServicePreviousValues, error) {
+            var v ServicePreviousValues
+            ok, err := instance.exec.Exec(ctx, &v)
+            if err != nil {
+              return nil, err
+            }
+            if !ok {
+              return nil, ErrNoResult
+            }
+            return &v, nil
+          }
+
+          func (instance ServicePreviousValuesExec) Exists(ctx context.Context) (bool, error) {
+            return instance.exec.Exists(ctx)
+          }
+
+          type ServicePreviousValuesExecArray struct {
+            exec *prisma.Exec
+          }
+
+          func (instance ServicePreviousValuesExecArray) Exec(ctx context.Context) ([]ServicePreviousValues, error) {
+            var v []ServicePreviousValues
+            err := instance.exec.ExecArray(ctx, &v)
+            return v, err
+          }
+
+        type ServicePreviousValues struct {
+          ID string `json:"id"`
+CreatedAt string `json:"createdAt"`
+UpdatedAt string `json:"updatedAt"`
+Name string `json:"name"`
+Code string `json:"code"`
+Description *string `json:"description,omitempty"`
+Status string `json:"status"`
+Type string `json:"type"`
+Version *string `json:"version,omitempty"`
+CanBeRemoved bool `json:"canBeRemoved"`
+        }
+
+        type ContactPreviousValuesExec struct {
+          exec *prisma.Exec
+        }
+
+        
+
+          func (instance ContactPreviousValuesExec) Exec(ctx context.Context) (*ContactPreviousValues, error) {
+            var v ContactPreviousValues
+            ok, err := instance.exec.Exec(ctx, &v)
+            if err != nil {
+              return nil, err
+            }
+            if !ok {
+              return nil, ErrNoResult
+            }
+            return &v, nil
+          }
+
+          func (instance ContactPreviousValuesExec) Exists(ctx context.Context) (bool, error) {
+            return instance.exec.Exists(ctx)
+          }
+
+          type ContactPreviousValuesExecArray struct {
+            exec *prisma.Exec
+          }
+
+          func (instance ContactPreviousValuesExecArray) Exec(ctx context.Context) ([]ContactPreviousValues, error) {
+            var v []ContactPreviousValues
+            err := instance.exec.ExecArray(ctx, &v)
+            return v, err
+          }
+
+        type ContactPreviousValues struct {
+          ID string `json:"id"`
+CreatedAt string `json:"createdAt"`
+UpdatedAt string `json:"updatedAt"`
+LastName string `json:"lastName"`
+FirstName string `json:"firstName"`
+PhoneMain *string `json:"phoneMain,omitempty"`
+PhoneMobile *string `json:"phoneMobile,omitempty"`
+Email string `json:"email"`
+DbAccessType *string `json:"dbAccessType,omitempty"`
+EmergencyNotification *string `json:"emergencyNotification,omitempty"`
+SystemNotification *string `json:"systemNotification,omitempty"`
+VpnAccount *string `json:"vpnAccount,omitempty"`
+Note *string `json:"note,omitempty"`
+        }
+
+        type ServiceConnectionExec struct {
+          exec *prisma.Exec
+        }
+
+        
+                func (instance *ServiceConnectionExec) PageInfo() *PageInfoExec {
+                  ret := instance.exec.Client.GetOne(
+                    instance.exec,
+                    nil,
+                    [2]string{"", "PageInfo"},
+                    "pageInfo",
+                    []string{"hasNextPage","hasPreviousPage","startCursor","endCursor"})
+
+                  return &PageInfoExec{ret}
+                }
+
+                func (instance *ServiceConnectionExec) Edges() *ServiceEdgeExec {
+                  ret := instance.exec.Client.GetOne(
+                    instance.exec,
+                    nil,
+                    [2]string{"", "ServiceEdge"},
+                    "edges",
+                    []string{"cursor"})
+
+                  return &ServiceEdgeExec{ret}
+                }
+
+                  func (instance *ServiceConnectionExec) Aggregate(ctx context.Context) (Aggregate, error) {
+                    ret := instance.exec.Client.GetOne(
+                      instance.exec,
+                      nil,
+                      [2]string{"", "AggregateService"},
+                      "aggregate",
+                      []string{"count"})
+
+                    var v Aggregate
+                    _, err := ret.Exec(ctx, &v)
+                    return v, err
+                  }
+
+          func (instance ServiceConnectionExec) Exec(ctx context.Context) (*ServiceConnection, error) {
+            var v ServiceConnection
+            ok, err := instance.exec.Exec(ctx, &v)
+            if err != nil {
+              return nil, err
+            }
+            if !ok {
+              return nil, ErrNoResult
+            }
+            return &v, nil
+          }
+
+          func (instance ServiceConnectionExec) Exists(ctx context.Context) (bool, error) {
+            return instance.exec.Exists(ctx)
+          }
+
+          type ServiceConnectionExecArray struct {
+            exec *prisma.Exec
+          }
+
+          func (instance ServiceConnectionExecArray) Exec(ctx context.Context) ([]ServiceConnection, error) {
+            var v []ServiceConnection
+            err := instance.exec.ExecArray(ctx, &v)
+            return v, err
+          }
+
+        type ServiceConnection struct {
+          
+        }
+
+        type UserConnectionExec struct {
+          exec *prisma.Exec
+        }
+
+        
+                func (instance *UserConnectionExec) PageInfo() *PageInfoExec {
+                  ret := instance.exec.Client.GetOne(
+                    instance.exec,
+                    nil,
+                    [2]string{"", "PageInfo"},
+                    "pageInfo",
+                    []string{"hasNextPage","hasPreviousPage","startCursor","endCursor"})
+
+                  return &PageInfoExec{ret}
+                }
+
+                func (instance *UserConnectionExec) Edges() *UserEdgeExec {
+                  ret := instance.exec.Client.GetOne(
+                    instance.exec,
+                    nil,
+                    [2]string{"", "UserEdge"},
+                    "edges",
+                    []string{"cursor"})
+
+                  return &UserEdgeExec{ret}
+                }
+
+                  func (instance *UserConnectionExec) Aggregate(ctx context.Context) (Aggregate, error) {
+                    ret := instance.exec.Client.GetOne(
+                      instance.exec,
+                      nil,
+                      [2]string{"", "AggregateUser"},
+                      "aggregate",
+                      []string{"count"})
+
+                    var v Aggregate
+                    _, err := ret.Exec(ctx, &v)
+                    return v, err
+                  }
+
+          func (instance UserConnectionExec) Exec(ctx context.Context) (*UserConnection, error) {
+            var v UserConnection
+            ok, err := instance.exec.Exec(ctx, &v)
+            if err != nil {
+              return nil, err
+            }
+            if !ok {
+              return nil, ErrNoResult
+            }
+            return &v, nil
+          }
+
+          func (instance UserConnectionExec) Exists(ctx context.Context) (bool, error) {
+            return instance.exec.Exists(ctx)
+          }
+
+          type UserConnectionExecArray struct {
+            exec *prisma.Exec
+          }
+
+          func (instance UserConnectionExecArray) Exec(ctx context.Context) ([]UserConnection, error) {
+            var v []UserConnection
+            err := instance.exec.ExecArray(ctx, &v)
+            return v, err
+          }
+
+        type UserConnection struct {
+          
+        }
+
+        type CustomerConnectionExec struct {
+          exec *prisma.Exec
+        }
+
+        
+                func (instance *CustomerConnectionExec) PageInfo() *PageInfoExec {
+                  ret := instance.exec.Client.GetOne(
+                    instance.exec,
+                    nil,
+                    [2]string{"", "PageInfo"},
+                    "pageInfo",
+                    []string{"hasNextPage","hasPreviousPage","startCursor","endCursor"})
+
+                  return &PageInfoExec{ret}
+                }
+
+                func (instance *CustomerConnectionExec) Edges() *CustomerEdgeExec {
+                  ret := instance.exec.Client.GetOne(
+                    instance.exec,
+                    nil,
+                    [2]string{"", "CustomerEdge"},
+                    "edges",
+                    []string{"cursor"})
+
+                  return &CustomerEdgeExec{ret}
+                }
+
+                  func (instance *CustomerConnectionExec) Aggregate(ctx context.Context) (Aggregate, error) {
+                    ret := instance.exec.Client.GetOne(
+                      instance.exec,
+                      nil,
+                      [2]string{"", "AggregateCustomer"},
+                      "aggregate",
+                      []string{"count"})
+
+                    var v Aggregate
+                    _, err := ret.Exec(ctx, &v)
+                    return v, err
+                  }
+
+          func (instance CustomerConnectionExec) Exec(ctx context.Context) (*CustomerConnection, error) {
+            var v CustomerConnection
+            ok, err := instance.exec.Exec(ctx, &v)
+            if err != nil {
+              return nil, err
+            }
+            if !ok {
+              return nil, ErrNoResult
+            }
+            return &v, nil
+          }
+
+          func (instance CustomerConnectionExec) Exists(ctx context.Context) (bool, error) {
+            return instance.exec.Exists(ctx)
+          }
+
+          type CustomerConnectionExecArray struct {
+            exec *prisma.Exec
+          }
+
+          func (instance CustomerConnectionExecArray) Exec(ctx context.Context) ([]CustomerConnection, error) {
+            var v []CustomerConnection
+            err := instance.exec.ExecArray(ctx, &v)
+            return v, err
+          }
+
+        type CustomerConnection struct {
+          
+        }
+
 
 
 
